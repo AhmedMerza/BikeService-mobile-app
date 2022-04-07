@@ -1,9 +1,37 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>LogIn</ion-title>
+    <ion-buttons slot="start">
+      <ion-button routerLink="/home">
+        <ion-icon name="arrow-back-circle-outline" color="medium"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Log In</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="auth-form">
+  <form>
+    <ion-item lines="full">
+      <ion-label position="floating">Email</ion-label>
+      <ion-input type="text" required></ion-input>
+    </ion-item>
+    <ion-item lines="full">
+      <ion-label position="floating">Password</ion-label>
+      <ion-input type="password" required></ion-input>
+    </ion-item>
+    <ion-row>
+      <ion-col>
+        <ion-button style="margin: 25px 50px" type="submit" color="danger" expand="block">Log In</ion-button>
+        <a routerLink="/forgot-password" class="already">Forgot Password?</a>
+      </ion-col>
+    </ion-row>
+  </form>
+
+  <span class="divider line one-line" style="margin-top: 0">or</span>
+
+  <span class="already">You do not have an account?</span>
+  <br>
+
+  <ion-button style="margin: 0 50px" routerLink="/register" expand="block">Register</ion-button>
 
 </ion-content>
