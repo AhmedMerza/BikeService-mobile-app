@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { DataService } from '../data.service'
 @Component({
   selector: 'app-itemspage',
   templateUrl: './itemspage.page.html',
@@ -7,45 +7,41 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ItemspagePage implements OnInit {
 
-  public Itemslist = [ 
-       { type: "BIKE"  , name: "Blue bike" , info: "Price: 70 BD - Classic Blue bicylce for regular and sports uses " , pic: "bluebike.png" },
-       { type: "SADDLE" , name: "Leather Brown Saddle"  , info:"Price: 55.5 BD - Authentic Brown leather saddle for premium comfort and look  " , pic: "LeaBrownsaddle.jpg"},
-       { type: "ACCESSORIES" , name: "Phone handle" , info:"Price: 5 BD - Handler to mount on the bike it fits all types of phones " , pic: "phonehand.jpg"},
-       { type: "SADDLE"  , name: "Black Saddle"   , info:"Price: 35 BD - Classic Black bicylce saddle for regular and sports uses " , pic: "saddle1.jpg"}
-    ];
+  searchedItems;
 
-  constructor() { this.initializeItems(); }
-  initializeItems() {
-    this.Itemslist = [ 
-         { type: "BIKE"  , name: "Blue bike" , info: "Price: 70 BD - Classic Blue bicylce for regular and sports uses " , pic: "bluebike.png" },
-         { type: "SADDLE" , name: "Leather Brown Saddle"  , info:"Price: 55.5 BD - Authentic Brown leather saddle for premium comfort and look  " , pic: "LeaBrownsaddle.jpg"},
-         { type: "ACCESSORIES" , name: "Phone handle" , info:"Price: 5 BD - Handler to mount on the bike it fits all types of phones " , pic: "phonehand.jpg"},
-         { type: "SADDLE"  , name: "Black Saddle"   , info:"Price: 35 BD - Classic Black bicylce saddle for regular and sports uses " , pic: "saddle1.jpg"}
-      ];
+  constructor(public dataServ: DataService) {
+    this.searchedItems = dataServ.Itemslist;
+    this.expandVal();
   }
+
 
   ngOnInit() {
   }
 
-    
-  expandcard=false;
-  expand(){
-    this.expandcard=!this.expandcard;
+  expand(i) {
+    this.expandCard[i] = !this.expandCard[i];
   }
 
+  expandCard: boolean[] = [];
+
   getItems(ev: any) {
-    // Reset items back to all items
-    this.initializeItems();
 
     // set val to the searchbar value
     let val = ev.target.value;
 
     // if the value is an empty string don't filter the items
     if (val && val.trim() != '') {
-      this.Itemslist = this.Itemslist.filter((item) => {
+      this.searchedItems = this.dataServ.Itemslist.filter((item) => {
         return (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
       })
     }
+    else this.searchedItems = this.dataServ.Itemslist;
+    this.expandVal();
+  }
+
+  expandVal() {
+    for (let i = 0; i < this.searchedItems.length; i++)
+      this.expandCard.push(false)
   }
 
 }
