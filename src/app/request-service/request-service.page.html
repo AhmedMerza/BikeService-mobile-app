@@ -1,0 +1,93 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Request a Service</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-progress-bar slot="fixed" value="{{progressBar}}"></ion-progress-bar>
+  <ion-item>
+    <ion-label>Type of Bike</ion-label>
+    <ion-select [(ngModel)]="type" (ionChange)="progress()">
+      <ion-select-option *ngFor="let type of dataServ.types">{{type.name}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>The issue</ion-label>
+    <ion-select multiple="true" [(ngModel)]="issue" (ionChange)="checkEtc(); progress()">
+      <ion-select-option *ngFor="let issue of dataServ.issues">{{issue.name}}</ion-select-option>
+      <ion-select-option>Etc</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item *ngIf="etc == 'Etc'" lines="none">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6">
+          <ion-checkbox></ion-checkbox>
+          Wheels pic
+          <ion-badge color="danger">66</ion-badge>
+        </ion-col>
+        <ion-col>
+          <ion-checkbox></ion-checkbox>
+          Rims pic
+          <ion-badge color="danger">66</ion-badge>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <ion-checkbox></ion-checkbox>
+          Chain pic
+          <ion-badge color="danger">66</ion-badge>
+        </ion-col>
+        <ion-col>
+          <ion-checkbox></ion-checkbox>
+          Pedals pic
+          <ion-badge color="danger">66</ion-badge>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+
+  <ion-item *ngIf="etc == 'Etc'">
+    <ion-label position="stacked">Comments</ion-label>
+    <ion-textarea placeholder="The issue(s)"></ion-textarea>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Service</ion-label>
+    <ion-select [(ngModel)]="service">
+      <ion-select-option>Major</ion-select-option>
+      <ion-select-option>Minor</ion-select-option>
+      <ion-select-option>None</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-checkbox [(ngModel)]="pickup"></ion-checkbox>
+    <ion-label>Pickup and drop time</ion-label>
+    <ion-button fill="clear" id="open-date-input" disabled="{{!pickup}}">
+      <ion-icon icon="calendar"></ion-icon>
+    </ion-button>
+    <ion-popover trigger="open-date-input" show-backdrop="false">
+      <ng-template>
+        <ion-datetime (ionChange)="progress()" minuteValues="0,15,30,45" #popoverDatetime2 format="MM/DD/YYYY"
+          [(ngModel)]="dateTime">
+        </ion-datetime>
+      </ng-template>
+    </ion-popover>
+  </ion-item>
+
+  <ion-item>
+    <ion-button style="margin: 0 auto">
+      <ion-icon name="cart-outline"></ion-icon>
+      Pay
+    </ion-button>
+  </ion-item>
+
+
+</ion-content>
