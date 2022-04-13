@@ -26,6 +26,10 @@ const routes: Routes = [
     path: 'request-service',
     loadChildren: () => import('./request-service/request-service.module').then( m => m.RequestServicePageModule)
   },
+  {
+    path: 'admin-panel',
+    loadChildren: () => import('./admin-panel/admin-panel.module').then( m => m.AdminPanelPageModule)
+  },
 
 ];
 
