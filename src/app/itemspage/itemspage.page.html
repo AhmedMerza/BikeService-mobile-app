@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>itemspage</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content> 
+  <ion-searchbar animated showCancelButton="focus" spellcheck="true" (ionInput)="getItems($event)"></ion-searchbar>
+  <ion-card (click)="expand()" *ngFor="let item of Itemslist">
+    <img src= "..\assets\img\{{item.pic}}" />
+    <ion-card-header>
+      <ion-card-subtitle>{{item.type}}</ion-card-subtitle>
+      <ion-card-title>{{item.name}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content *ngIf="expandcard">
+      {{item.info}}
+    </ion-card-content>
+  </ion-card>
+  
+</ion-content>

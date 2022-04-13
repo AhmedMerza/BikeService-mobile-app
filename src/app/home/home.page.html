@@ -1,15 +1,69 @@
-<ion-header [translucent]="true">
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-button>
-        <ion-icon name="menu-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-title>
-      Home
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-menu content-id="main-content">
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>Menu</ion-title>
+      </ion-toolbar>
+    </ion-header>
 
-<ion-content>
-</ion-content>
+
+    <ion-content>
+      <ion-list>
+        <ion-menu-toggle auto-hide="false">
+          <ion-item button>
+            <ion-icon slot="start" name="home"></ion-icon>
+            <ion-label> Home </ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <ion-page class="ion-page" id="main-content"> 
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-menu-toggle>
+            <ion-button>
+              <ion-icon slot="icon-only" name="menu"></ion-icon>
+            </ion-button>
+          </ion-menu-toggle>
+        </ion-buttons>
+        <ion-title>Home</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <br><br><br>
+      <ion-grid >
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="5">
+           <ion-button expand="clear" routerLink="/itemspage"><ion-icon name="pricetags-outline"></ion-icon>  &nbsp; ITEMS </ion-button>
+          </ion-col>
+          <ion-col size="5">
+            <ion-button expand="block"> </ion-button>
+          </ion-col>
+        </ion-row>
+        <br><br><br>
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="5">
+           <ion-button expand="block"> </ion-button>
+          </ion-col>
+          <ion-col size="5">
+            <ion-button expand="block"> </ion-button>
+          </ion-col>
+        </ion-row>
+        <br><br><br>
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="5">
+           <ion-button expand="block"> </ion-button>
+          </ion-col>
+          <ion-col size="5">
+            <ion-button expand="block"> </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      
+    </ion-content>
+  </ion-page> 
+
+<ion-menu-controller></ion-menu-controller> 
+
