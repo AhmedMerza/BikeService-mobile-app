@@ -18,7 +18,8 @@ const routes: Routes = [
   {
     path: 'register',
     loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
-  },  {
+  },
+  {
     path: 'forgot-password',
     loadChildren: () => import('./forgot-password/forgot-password.module').then( m => m.ForgotPasswordPageModule)
   },
@@ -30,7 +31,12 @@ const routes: Routes = [
     path: 'admin-panel',
     loadChildren: () => import('./admin-panel/admin-panel.module').then( m => m.AdminPanelPageModule)
   },
+  },
+  {
 
+    path: 'itemspage',
+    loadChildren: () => import('./itemspage/itemspage.module').then( m => m.ItemspagePageModule)
+  },
 ];
 
 @NgModule({
