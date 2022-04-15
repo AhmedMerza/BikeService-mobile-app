@@ -16,7 +16,7 @@
     </ion-select>
   </ion-item>
 
-  <ion-item>
+  <ion-item lines="{{lines}}">
     <ion-label>The issue</ion-label>
     <ion-select multiple="true" [(ngModel)]="issue" (ionChange)="checkEtc(); progress()">
       <ion-select-option *ngFor="let issue of dataServ.issues">{{issue.name}}</ion-select-option>
@@ -24,30 +24,17 @@
     </ion-select>
   </ion-item>
 
+  <ion-item lines="none" *ngIf="etc == 'Etc'">
+    <ion-label>In which photo the issue(s) is(are)</ion-label>
+  </ion-item>
+
   <ion-item *ngIf="etc == 'Etc'" lines="none">
     <ion-grid>
       <ion-row>
-        <ion-col size="6">
-          <ion-checkbox></ion-checkbox>
-          Wheels pic
-          <ion-badge color="danger">66</ion-badge>
-        </ion-col>
-        <ion-col>
-          <ion-checkbox></ion-checkbox>
-          Rims pic
-          <ion-badge color="danger">66</ion-badge>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="6">
-          <ion-checkbox></ion-checkbox>
-          Chain pic
-          <ion-badge color="danger">66</ion-badge>
-        </ion-col>
-        <ion-col>
-          <ion-checkbox></ion-checkbox>
-          Pedals pic
-          <ion-badge color="danger">66</ion-badge>
+        <ion-col size="6" *ngFor="let bikePart of dataServ.bikeParts, let i = index">
+          <ion-checkbox (ionChange)="check(i)" [checked]="bikePart.checked">
+          </ion-checkbox>
+          <img src={{bikePart.image}}>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -55,7 +42,7 @@
 
   <ion-item *ngIf="etc == 'Etc'">
     <ion-label position="stacked">Comments</ion-label>
-    <ion-textarea placeholder="The issue(s)"></ion-textarea>
+    <ion-textarea placeholder="The issue(s)" [(ngModel)]="comments"></ion-textarea>
   </ion-item>
 
   <ion-item>
@@ -70,20 +57,31 @@
   <ion-item>
     <ion-checkbox [(ngModel)]="pickup"></ion-checkbox>
     <ion-label>Pickup and drop time</ion-label>
-    <ion-button fill="clear" id="open-date-input" disabled="{{!pickup}}">
+    <ion-button fill="clear" id="open-modal" disabled="{{!pickup}}">
       <ion-icon icon="calendar"></ion-icon>
     </ion-button>
-    <ion-popover trigger="open-date-input" show-backdrop="false">
+    <ion-modal trigger="open-modal">
+      <ion-content force-overscroll="false">
+        <!-- <ion-popover trigger="open-date-input" show-backdrop="false"> -->
+        <ng-template>
+          <ion-datetime (ionChange)="progress()" minuteValues="0,15,30,45" #popoverDatetime2 format="MM/DD/YYYY"
+            [(ngModel)]="dateTime">
+          </ion-datetime>
+        </ng-template>
+        <!-- </ion-popover> -->
+      </ion-content>
+    </ion-modal>
+    <!-- <ion-popover trigger="open-date-input" show-backdrop="false">
       <ng-template>
         <ion-datetime (ionChange)="progress()" minuteValues="0,15,30,45" #popoverDatetime2 format="MM/DD/YYYY"
           [(ngModel)]="dateTime">
         </ion-datetime>
       </ng-template>
-    </ion-popover>
+    </ion-popover> -->
   </ion-item>
 
-  <ion-item>
-    <ion-button style="margin: 0 auto">
+  <ion-item lines="none">
+    <ion-button style="margin: 20px auto;" size="large" expand="block" (click)="pay()">
       <ion-icon name="cart-outline"></ion-icon>
       Pay
     </ion-button>
