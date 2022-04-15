@@ -35,25 +35,31 @@ export class RequestServicePage implements OnInit {
     this.progressBar = 0;
     if (this.type != null)
       this.progressBar += 0.33;
-    if (this.issue != null)
+    if (this.issue != null && !this.etcInput())
       this.progressBar += 0.33;
     if (this.pickup == false)
       this.progressBar += 0.34;
     else this.progressBar += 0.34;
   }
 
+  etcInput() {
+    if (this.etc == 'Etc') {
+      let checked = 0;
+      for (let i = 0; i < this.dataServ.bikeParts.length; i++)
+        if (this.dataServ.bikeParts[i].checked == true) checked++;
+
+      this.comments = this.comments.trim();
+      return checked == 0 || this.comments == "" ? true : false
+    } else return false;
+  }
+
   async pay() {
     let header = "You request has been submitted";
     let message = "";
     if (this.type != null && this.issue != null) {
-      let checked = 0;
       if (this.etc == 'Etc') {
-        for (let i = 0; i < this.dataServ.bikeParts.length; i++)
-          if (this.dataServ.bikeParts[i].checked == true) checked++;
 
-        this.comments = this.comments.trim();
-
-        if (checked == 0 || this.comments == "") {
+        if (this.etcInput()) {
           header = "Missing information";
           message = "Please fill all the inputs";
         }

@@ -32,7 +32,7 @@
     <ion-grid>
       <ion-row>
         <ion-col size="6" *ngFor="let bikePart of dataServ.bikeParts, let i = index">
-          <ion-checkbox (ionChange)="check(i)" [checked]="bikePart.checked">
+          <ion-checkbox (ionChange)="check(i); progress();" [checked]="bikePart.checked">
           </ion-checkbox>
           <img src={{bikePart.image}}>
         </ion-col>
@@ -42,7 +42,7 @@
 
   <ion-item *ngIf="etc == 'Etc'">
     <ion-label position="stacked">Comments</ion-label>
-    <ion-textarea placeholder="The issue(s)" [(ngModel)]="comments"></ion-textarea>
+    <ion-textarea placeholder="The issue(s)" [(ngModel)]="comments" (ionChange)="progress()"></ion-textarea>
   </ion-item>
 
   <ion-item>
