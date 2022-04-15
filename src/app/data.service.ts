@@ -37,6 +37,12 @@ export class DataService {
     { id: 3, type: "SADDLE", name: "Black Saddle", info: "Price: 35 BD - Classic Black bicylce saddle for regular and sports uses ", pic: "saddle1.jpg" }
   ];
 
+  bikeParts = [
+    { id: 0, checked: false, image: "../../assets/img/serviceImages/frontAnatomy.jpg" },
+    { id: 1, checked: false, image: "../../assets/img/serviceImages/frameAnatomy.jpg" },
+    { id: 2, checked: false, image: "../../assets/img/serviceImages/saddleAnatomy.jpg" },
+    { id: 3, checked: false, image: "../../assets/img/serviceImages/peddleAnatomy.jpg" },
+  ];
 
 
   constructor() { }
