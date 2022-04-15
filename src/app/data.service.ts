@@ -30,6 +30,19 @@ export class DataService {
     { id: 8, name: "Utility Bike" },
   ];
 
+  Itemslist = [
+    { id: 0, type: "BIKE", name: "Blue bike", info: "Price: 70 BD - Classic Blue bicylce for regular and sports uses ", pic: "bluebike.png" },
+    { id: 1, type: "SADDLE", name: "Leather Brown Saddle", info: "Price: 55.5 BD - Authentic Brown leather saddle for premium comfort and look  ", pic: "LeaBrownsaddle.jpg" },
+    { id: 2, type: "ACCESSORIES", name: "Phone handle", info: "Price: 5 BD - Handler to mount on the bike it fits all types of phones ", pic: "phonehand.jpg" },
+    { id: 3, type: "SADDLE", name: "Black Saddle", info: "Price: 35 BD - Classic Black bicylce saddle for regular and sports uses ", pic: "saddle1.jpg" }
+  ];
+
+  bikeParts = [
+    { id: 0, checked: false, image: "../../assets/img/serviceImages/frontAnatomy.jpg" },
+    { id: 1, checked: false, image: "../../assets/img/serviceImages/frameAnatomy.jpg" },
+    { id: 2, checked: false, image: "../../assets/img/serviceImages/saddleAnatomy.jpg" },
+    { id: 3, checked: false, image: "../../assets/img/serviceImages/peddleAnatomy.jpg" },
+  ];
 
 
   constructor() { }
