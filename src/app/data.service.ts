@@ -30,12 +30,12 @@ export class DataService {
     { id: 8, name: "Utility Bike" },
   ];
 
-  Itemslist = [
-    { id: 0, type: "BIKE", name: "Blue bike", info: "Classic Blue bicylce for regular and sports uses ", pic: "bluebike.png", price: 70 },
-    { id: 1, type: "SADDLE", name: "Leather Brown Saddle", info: "Authentic Brown leather saddle for premium comfort and look  ", pic: "LeaBrownsaddle.jpg" , price: 55.5},
-    { id: 2, type: "ACCESSORIES", name: "Phone handle", info: "Handler to mount on the bike it fits all types of phones ", pic: "phonehand.jpg" , price: 5 },
-    { id: 3, type: "SADDLE", name: "Black Saddle", info: "Classic Black bicylce saddle for regular and sports uses ", pic: "saddle1.jpg" , price: 35 }
-  ];
+  // Itemslist = [
+  //   { id: 0, type: "BIKE", name: "Blue bike", info: "Classic Blue bicylce for regular and sports uses ", pic: "bluebike.png", price: 70, amount: 0 },
+  //   { id: 1, type: "SADDLE", name: "Leather Brown Saddle", info: "Authentic Brown leather saddle for premium comfort and look  ", pic: "LeaBrownsaddle.jpg" , price: 55.5, amount: 0 },
+  //   { id: 2, type: "ACCESSORIES", name: "Phone handle", info: "Handler to mount on the bike it fits all types of phones ", pic: "phonehand.jpg" , price: 5, amount: 0  },
+  //   { id: 3, type: "SADDLE", name: "Black Saddle", info: "Classic Black bicylce saddle for regular and sports uses ", pic: "saddle1.jpg" , price: 35, amount: 0  }
+  // ];
 
   bikeParts = [
     { id: 0, checked: false, image: "../../assets/img/serviceImages/frontAnatomy.jpg" },

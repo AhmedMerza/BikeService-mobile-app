@@ -1,5 +1,14 @@
-import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service'
+
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { CartService } from './../cart.service';
+import { ModalController } from '@ionic/angular';
+import { CartModalPage } from '../cart-modal/cart-modal.page';
+import { BehaviorSubject } from 'rxjs';
+
+import { Animation, AnimationController } from '@ionic/angular';
+
+
 @Component({
   selector: 'app-itemspage',
   templateUrl: './itemspage.page.html',
@@ -9,13 +18,21 @@ export class ItemspagePage implements OnInit {
 
   searchedItems;
 
-  constructor(public dataServ: DataService) {
-    this.searchedItems = dataServ.Itemslist;
+  cart = [];
+  products = [];
+  cartItemCount: BehaviorSubject<number>;
+ 
+  @ViewChild('cart', {static: false, read: ElementRef})fab: ElementRef;
+
+  constructor(public dataServ: DataService, private cartService: CartService, private modalCtrl: ModalController, public animationCtrl: AnimationController) {
+    this.searchedItems = cartService.Itemslist;
     this.expandVal();
   }
 
-
   ngOnInit() {
+    this.products = this.cartService.getProducts();
+    this.cart = this.cartService.getCart();
+    this.cartItemCount = this.cartService.getCartItemCount();
   }
 
   expand(i) {
@@ -31,11 +48,11 @@ export class ItemspagePage implements OnInit {
 
     // if the value is an empty string don't filter the items
     if (val && val.trim() != '') {
-      this.searchedItems = this.dataServ.Itemslist.filter((item) => {
+      this.searchedItems = this.cartService.Itemslist.filter((item) => {
         return (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
       })
     }
-    else this.searchedItems = this.dataServ.Itemslist;
+    else this.searchedItems = this.cartService.Itemslist;
     this.expandVal();
   }
 
@@ -44,5 +61,41 @@ export class ItemspagePage implements OnInit {
       this.expandCard.push(false)
   }
 
+  addToCart(product) {
+    this.cartService.addProduct(product);
+    this.animateCSS('tada');
+  }
+ 
+  async openCart() {
+    this.animateCSS('bounceOutLeft', true);
+ 
+    let modal = await this.modalCtrl.create({
+      component: CartModalPage,
+      cssClass: 'cart-modal'
+    });
+    modal.onWillDismiss().then(() => {
+      this.fab.nativeElement.classList.remove('animated', 'bounceOutLeft')
+      this.animateCSS('bounceInLeft');
+    });
+    modal.present();
+  }
+ 
+  animateCSS(animationName, keepAnimated = false) {
+    const node = this.fab.nativeElement;
+    // node.classList.add('animated', animationName)
+    
+    // //https://github.com/daneden/animate.css
+    // function handleAnimationEnd() {
+    //   if (!keepAnimated) {
+    //     node.classList.remove('animated', animationName);
+    //   }
+    //   node.removeEventListener('animationend', handleAnimationEnd)
+    // }
+    // node.addEventListener('animationend', handleAnimationEnd)
+    const animatoin = this.animationCtrl.create().addElement(node).duration(1000).fromTo('opacity', '1', '0')
+  }
+
 }
 
+// @keyframes tada{0%{transform:scaleX(1)}10%,20%{transform:scale3d(.9,.9,.9) rotate(-3deg)}30%,50%,70%,90%{transform:scale3d(1.1,1.1,1.1) rotate(3deg)}40%,60%,80%{transform:scale3d(1.1,1.1,1.1) rotate(-3deg)}to{transform:scaleX(1)}}
+// .animate__tada{animation-name:tada}
