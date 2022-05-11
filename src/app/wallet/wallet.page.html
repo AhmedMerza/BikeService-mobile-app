@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-back-button slot="start" defaultHref="/home"></ion-back-button>
+    <ion-title>Wallet</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div style="margin: 30px; margin-top: 35px; display: flex; flex-direction: column; justify-content: center;">
+      <ion-label style="margin-left: 20px">Available balance</ion-label>
+      <ion-card>
+      <ion-card-header>
+        <ion-card-title style="text-align: center; font-size: 3rem">{{wallet}}BD</ion-card-title>
+      </ion-card-header>
+    </ion-card>
+    <br>
+    <br>
+    <br>
+    <ion-item lines="none">
+      <ion-label>Add balance to your wallet</ion-label>
+    <ion-input type="number" min="0"></ion-input>
+    </ion-item>
+
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title style="text-align: center; font-size: 3rem">
+            <ion-item lines="none">
+              <ion-input placeholder="0" min="0" [(ngModel)]="money" type="number"></ion-input><ion-label>BD</ion-label>
+            </ion-item>
+          </ion-card-title>
+        </ion-card-header>
+      </ion-card>
+
+      <ion-button (click)="add()">Add</ion-button>
+
+  </div>
+</ion-content>
