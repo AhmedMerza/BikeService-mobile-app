@@ -7,6 +7,7 @@ import { CartModalPage } from '../cart-modal/cart-modal.page';
 import { BehaviorSubject } from 'rxjs';
 
 import { Animation, AnimationController } from '@ionic/angular';
+import { filter, map } from 'rxjs/operators';
 
 
 @Component({
@@ -25,12 +26,12 @@ export class ItemspagePage implements OnInit {
   @ViewChild('cart', {static: false, read: ElementRef})fab: ElementRef;
 
   constructor(public dataServ: DataService, private cartService: CartService, private modalCtrl: ModalController, public animationCtrl: AnimationController) {
-    this.searchedItems = cartService.Itemslist;
+    this.searchedItems = cartService.getProducts();
     this.expandVal();
   }
 
   ngOnInit() {
-    this.products = this.cartService.getProducts();
+    // this.products = this.cartService.getProducts();
     this.cart = this.cartService.getCart();
     this.cartItemCount = this.cartService.getCartItemCount();
   }
@@ -48,13 +49,17 @@ export class ItemspagePage implements OnInit {
 
     // if the value is an empty string don't filter the items
     if (val && val.trim() != '') {
-      this.searchedItems = this.cartService.Itemslist.filter((item) => {
-        return (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
-      })
+      var items = this.cartService.getProducts();
+      // this.searchedItems = items.filter((item) => {
+      //   return (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      // })
+      this.searchedItems = items.pipe(map((item) => item.filter((a)=> {return (a.name.toLowerCase().indexOf(val.toLowerCase()) > -1);})))
+
     }
-    else this.searchedItems = this.cartService.Itemslist;
+    else this.searchedItems = this.cartService.getProducts();
     this.expandVal();
   }
+  
 
   expandVal() {
     for (let i = 0; i < this.searchedItems.length; i++)
