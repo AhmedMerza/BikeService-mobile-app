@@ -1,15 +1,23 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+
+import { AngularFirestore} from '@angular/fire/compat/firestore';
+import { AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { DocumentReference } from '@angular/fire/compat/firestore';
+import { map, take } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+
  
 export interface Product {
   id: number;
   name: string;
   price: number;
-  amount: number;
   type: string;
   info: string;
   pic: string;
+  discount: number;
 }
+
 @Injectable({
   providedIn: 'root'
 })
@@ -21,21 +29,63 @@ export class CartService {
   //   { id: 3, name: 'Salad', price: 6.99, amount: 0 }
   // ];
 
-  Itemslist: Product[] = [
-    { id: 0, type: "BIKE", name: "Blue bike", info: "Classic Blue bicylce for regular and sports uses ", pic: "bluebike.png", price: 70, amount: 0 },
-    { id: 1, type: "SADDLE", name: "Leather Brown Saddle", info: "Authentic Brown leather saddle for premium comfort and look  ", pic: "LeaBrownsaddle.jpg" , price: 55.5, amount: 0 },
-    { id: 2, type: "ACCESSORIES", name: "Phone handle", info: "Handler to mount on the bike it fits all types of phones ", pic: "phonehand.jpg" , price: 5, amount: 0  },
-    { id: 3, type: "SADDLE", name: "Black Saddle", info: "Classic Black bicylce saddle for regular and sports uses ", pic: "saddle1.jpg" , price: 35, amount: 0  }
-  ];
+  // Itemslist: Product[] = [
+  //   { id: 0, type: "BIKE", name: "Blue bike", info: "Classic Blue bicylce for regular and sports uses", pic: "bluebike.png", price: 70, discount: 0 },
+  //   { id: 1, type: "SADDLE", name: "Leather Brown Saddle", info: "Authentic Brown leather saddle for premium comfort and look  ", pic: "LeaBrownsaddle.jpg" , price: 55.5, discount: 0 },
+  //   { id: 2, type: "ACCESSORIES", name: "Phone handle", info: "Handler to mount on the bike it fits all types of phones ", pic: "phonehand.jpg" , price: 5, discount: 0  },
+  //   { id: 3, type: "SADDLE", name: "Black Saddle", info: "Classic Black bicylce saddle for regular and sports uses ", pic: "saddle1.jpg" , price: 35, discount: 0  }
+  // ];
  
   private cart = [];
   private cartItemCount = new BehaviorSubject(0);
+
+  index: number;
+  searchedItems;
  
-  constructor() {}
- 
-  getProducts() {
-    return this.Itemslist;
-  }
+  private products: Observable<Product[]>;
+  private productCollection: AngularFirestoreCollection<Product>;
+
+  constructor(private afs: AngularFirestore) {
+        this.productCollection = this.afs.collection<Product>('items');
+        this.products= this.productCollection.snapshotChanges().pipe(
+          map(actions => {
+            return actions.map(a => {
+              const data = a.payload.doc.data();
+              const id = a.payload.doc.id;
+              return { id, ...data };
+            });
+          })
+        );
+      }
+    
+
+  getProducts (): Observable<Product[]> {
+        return this.products;
+      }
+
+     getProduct(id:number): Observable<Product> {
+          return this.productCollection.doc<Product>(id.toString()).valueChanges().pipe(
+            map(product => {
+              product.id = id;
+              return product
+            })
+          );
+        }
+
+     addIdea(idea: Product): Promise<DocumentReference> {
+            return this.productCollection.add(idea); 
+        }
+      updateIdea(product: Product): Promise<void> {
+          return this.productCollection.doc(product.id.toString()).update({ name: product. name, price: product.price, info: product.info, type: product.type, discount: product.discount });
+        }
+       
+        deleteIdea(id: string): Promise<void> {
+          return this.productCollection.doc(id).delete();
+        }
+      
+  // getProducts() {
+  //   return this.Itemslist;
+  // }
  
   getCart() {
     return this.cart;

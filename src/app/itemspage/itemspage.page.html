@@ -29,7 +29,7 @@
     </ion-fab-button>
   </ion-fab>
   <ion-list>
-    <ion-card *ngFor="let item of searchedItems, let i = index">
+    <ion-card *ngFor="let item of searchedItems | async, let i = index">
       <img (click)="expand(i)" src="..\assets\img\{{item.pic}}" />
       <ion-card-header>
         <ion-card-subtitle>{{item.type}}</ion-card-subtitle>

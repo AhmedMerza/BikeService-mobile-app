@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>items</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-searchbar animated showCancelButton="focus" spellcheck="true" (ionInput)="getItems($event)"></ion-searchbar>
+  <ion-list>
+    <ion-card *ngFor="let item of cartService.searchedItems | async, let i = index" (click)="edit(i)">
+      <img src="..\assets\img\{{item.pic}}" />
+      <ion-card-header>
+        <ion-card-subtitle>{{item.type}}</ion-card-subtitle>
+        <ion-card-title>{{item.name}}</ion-card-title>
+            <ion-label color="secondary">
+              <b>{{ item.price}} BHD</b>
+            </ion-label>
+      </ion-card-header>
+    </ion-card>
+  </ion-list>
+</ion-content>
