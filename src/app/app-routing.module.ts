@@ -39,7 +39,8 @@ const routes: Routes = [
   {
     path: 'cart-modal',
     loadChildren: () => import('./cart-modal/cart-modal.module').then( m => m.CartModalPageModule)
-  },  {
+  },
+  {
     path: 'wallet',
     loadChildren: () => import('./wallet/wallet.module').then( m => m.WalletPageModule)
   },
