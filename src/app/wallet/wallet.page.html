@@ -34,4 +34,7 @@
       <ion-button (click)="add()">Add</ion-button>
 
   </div>
+  <div *ngIf="walletServ.loading" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); ">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
 </ion-content>

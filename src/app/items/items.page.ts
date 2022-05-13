@@ -35,12 +35,17 @@ export class ItemsPage implements OnInit {
     else this.cartService.searchedItems = this.cartService.getProducts();
   }
 
-  edit(i) {
-    this.cartService.index = i;
-    this.openCart();
+  edit(id) {
+    this.cartService.id = id;
+    this.openEditModal();
   }
 
-  async openCart() {
+  add() {
+    this.cartService.id = null;
+    this.openEditModal();
+  }
+
+  async openEditModal() {
     let modal = await this.modalCtrl.create({
       component: EditItemPage,
       cssClass: 'cart-modal'

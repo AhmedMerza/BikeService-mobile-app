@@ -15,7 +15,6 @@ export class CartModalPage implements OnInit {
  
   ngOnInit() {
     this.cart = this.cartService.getCart();
-    console.log(this.cart)
   }
  
   decreaseCartItem(product) {
@@ -23,7 +22,7 @@ export class CartModalPage implements OnInit {
   }
  
   increaseCartItem(product) {
-    this.cartService.addProduct(product);
+    this.cartService.addToCart(product);
   }
  
   removeCartItem(product) {

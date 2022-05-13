@@ -67,7 +67,7 @@ export class ItemspagePage implements OnInit {
   }
 
   addToCart(product) {
-    this.cartService.addProduct(product);
+    this.cartService.addToCart(product);
     this.animateCSS('tada');
   }
  

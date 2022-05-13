@@ -14,5 +14,37 @@
     <ion-label>Type:</ion-label>
     <ion-input [(ngModel)]="type"></ion-input>
   </ion-item>
+  <ion-item>
+    <ion-label>Info:</ion-label>
+    <ion-input [(ngModel)]="info"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Price:</ion-label>
+    <ion-input [(ngModel)]="price"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Discount:</ion-label>
+    <ion-input [(ngModel)]="discount"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Pic:</ion-label>
+    <ion-input [(ngModel)]="pic"></ion-input>
+  </ion-item>
 </ion-list>
+<br>
+<br>
+  <div style="display:flex; justify-content:space-around;">
+    <ion-button (click)="update()" *ngIf="cartService.id != null">
+      <ion-icon name="create-outline"></ion-icon>
+      &nbsp;  Update
+    </ion-button>
+    <ion-button (click)="delete()" *ngIf="cartService.id != null">
+      <ion-icon name="trash-outline"></ion-icon>
+      &nbsp;  Remove
+    </ion-button>
+    <ion-button (click)="add()"  *ngIf="cartService.id == null">
+      <ion-icon name="create-outline"></ion-icon>
+      &nbsp;  Add
+    </ion-button>
+  </div>
 </ion-content>

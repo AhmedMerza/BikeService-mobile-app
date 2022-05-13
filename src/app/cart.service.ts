@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 
  
 export interface Product {
-  id: number;
+  id?: string;
   name: string;
   price: number;
   type: string;
@@ -22,12 +22,6 @@ export interface Product {
   providedIn: 'root'
 })
 export class CartService {
-  // data: Product[] = [
-  //   { id: 0, name: 'Pizza Salami', price: 8.99, amount: 0 },
-  //   { id: 1, name: 'Pizza Classic', price: 5.49, amount: 0 },
-  //   { id: 2, name: 'Sliced Bread', price: 4.99, amount: 0 },
-  //   { id: 3, name: 'Salad', price: 6.99, amount: 0 }
-  // ];
 
   // Itemslist: Product[] = [
   //   { id: 0, type: "BIKE", name: "Blue bike", info: "Classic Blue bicylce for regular and sports uses", pic: "bluebike.png", price: 70, discount: 0 },
@@ -39,11 +33,12 @@ export class CartService {
   private cart = [];
   private cartItemCount = new BehaviorSubject(0);
 
-  index: number;
+  id;
   searchedItems;
  
-  private products: Observable<Product[]>;
-  private productCollection: AngularFirestoreCollection<Product>;
+  products: Observable<Product[]>;
+  productCollection: AngularFirestoreCollection<Product>;
+  product: Product;
 
   constructor(private afs: AngularFirestore) {
         this.productCollection = this.afs.collection<Product>('items');
@@ -63,8 +58,8 @@ export class CartService {
         return this.products;
       }
 
-     getProduct(id:number): Observable<Product> {
-          return this.productCollection.doc<Product>(id.toString()).valueChanges().pipe(
+     getProduct(id): Observable<Product> {
+          return this.productCollection.doc<Product>(id).valueChanges().pipe(
             map(product => {
               product.id = id;
               return product
@@ -72,14 +67,14 @@ export class CartService {
           );
         }
 
-     addIdea(idea: Product): Promise<DocumentReference> {
-            return this.productCollection.add(idea); 
+    addProduct(product: Product): Promise<DocumentReference> {
+            return this.productCollection.add({name: product.name, info: product.info, type: product.type, pic: product.pic, discount: product.discount, price: product.price}); 
         }
-      updateIdea(product: Product): Promise<void> {
-          return this.productCollection.doc(product.id.toString()).update({ name: product. name, price: product.price, info: product.info, type: product.type, discount: product.discount });
+    updateProduct(product: Product): Promise<void> {
+          return this.productCollection.doc(product.id.toString()).update({ name: product.name, price: product.price, info: product.info, type: product.type, discount: product.discount, pic: product.pic });
         }
        
-        deleteIdea(id: string): Promise<void> {
+        deleteProduct(id: string): Promise<void> {
           return this.productCollection.doc(id).delete();
         }
       
@@ -95,7 +90,7 @@ export class CartService {
     return this.cartItemCount;
   }
  
-  addProduct(product) {
+  addToCart(product) {
     let added = false;
     for (let p of this.cart) {
       if (p.id === product.id) {
