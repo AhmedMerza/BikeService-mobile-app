@@ -4,6 +4,13 @@
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
     <ion-title>itemspage</ion-title>
+    <ion-button slot="end" fill="clear">
+      <ion-icon name="filter"></ion-icon>
+    </ion-button>
+    <ion-button slot="end" fill="clear"  (click)="openCart()" #cart>
+      <div class="cart-length">{{ cartItemCount | async }}</div>
+      <ion-icon name="cart-outline"></ion-icon>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -33,11 +40,11 @@
       <img (click)="expand(i)" src="..\assets\img\{{item.pic}}" />
       <ion-card-header>
         <ion-card-subtitle>{{item.type}}</ion-card-subtitle>
-        <ion-card-title>{{item.name}} - {{item.price}} BD</ion-card-title>
+        <ion-card-title>{{item.name}}</ion-card-title>
         <ion-row class="ion-align-items-center">
           <ion-col size="8">
             <ion-label color="secondary">
-              <b>{{ item.price | currency:'USD' }}</b>
+              <b>{{ item.price }} BHD</b>
             </ion-label>
           </ion-col>
           <ion-col size="4" class="ion-text-right">

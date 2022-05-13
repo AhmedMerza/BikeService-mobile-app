@@ -1,6 +1,7 @@
 import { Product, CartService } from './../cart.service';
 import { Component, OnInit } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
+import { WalletService } from '../wallet.service';
  
 @Component({
   selector: 'app-cart-modal',
@@ -10,8 +11,9 @@ import { ModalController, AlertController } from '@ionic/angular';
 export class CartModalPage implements OnInit {
  
   cart = [];
+  loading: boolean = false;
  
-  constructor(private cartService: CartService, private modalCtrl: ModalController, private alertCtrl: AlertController) { }
+  constructor(private cartService: CartService, private modalCtrl: ModalController, private alertCtrl: AlertController, public walletServ: WalletService) { }
  
   ngOnInit() {
     this.cart = this.cartService.getCart();
@@ -38,15 +40,30 @@ export class CartModalPage implements OnInit {
   }
  
   async checkout() {
-    this.cartService.checkOut();
-    
+    this.loading = true;
+    var money = this.getTotal();
+    if (money > this.walletServ.getWallet()) this.alert("Money issue", "You don't have enough money on your wallet to complete this transaction!", ['OK']);
+    else{
+      console.log(this.loading)
+      await new Promise(resolve => setTimeout(resolve, 3000));
+     this.loading = false;
+     console.log(this.loading)
+      this.walletServ.setWallet(this.walletServ.getWallet() - money);
+      this.cartService.checkOut();
+      this.alert('Thanks for your Order!', 'We will deliver your items as soon as possible', ['OK'])
+    }
+  }
+
+  async alert(header?: string, message?: string, buttons?) {
     let alert = await this.alertCtrl.create({
-      header: 'Thanks for your Order!',
-      message: 'We will deliver your items as soon as possible',
-      buttons: ['OK']
+      header: header,
+      message: message,
+      buttons: buttons,
     });
     alert.present().then(() => {
+      if (this.getTotal() <= this.walletServ.getWallet())
       this.modalCtrl.dismiss();
     });
   }
+
 }

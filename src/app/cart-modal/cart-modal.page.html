@@ -1,6 +1,11 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Cart</ion-title>
+    <ion-button fill="clear">
+      <ion-icon name="wallet-outline"></ion-icon>
+      &nbsp;
+      {{walletServ.wallet}} BHD
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
@@ -71,6 +76,10 @@
     <ion-button expand="full" (click)="checkout()">
       Checkout
     </ion-button>
+  </div>
+
+  <div *ngIf="loading" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); ">
+    <ion-spinner name="crescent"></ion-spinner>
   </div>
  
 </ion-content>

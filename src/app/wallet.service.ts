@@ -7,11 +7,11 @@ import { Storage } from '@capacitor/storage';
 })
 export class WalletService  {
 
-  wallet: number;
-  email: string;
-  userID: string;
+  private wallet: number;
+  private email: string;
+  private userID: string;
   loading: boolean = true;
-  userId: string;
+  private userId: string;
 
   constructor(public userServ: UserService) {
     Storage.get({key: 'email'}).then((res) => {this.email = res.value; 
@@ -33,5 +33,18 @@ export class WalletService  {
 
   setWallet(wallet) {
     this.wallet = wallet;
+    this.userServ.updateUser({email: this.email, wallet: this.wallet, type: 'user', id: this.userID});
+  }
+
+  getWallet() {
+    return this.wallet;
+  }
+
+  getLoading() {
+    return this.loading;
+  }
+
+  setLoading(loading: boolean) {
+    this.loading = loading;
   }
 }
