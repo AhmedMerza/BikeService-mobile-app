@@ -3,6 +3,9 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
+    <ion-button slot="end" fill="clear" (click)="add()">
+      <ion-icon name="add"></ion-icon>
+    </ion-button>
     <ion-title>items</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -10,7 +13,7 @@
 <ion-content>
   <ion-searchbar animated showCancelButton="focus" spellcheck="true" (ionInput)="getItems($event)"></ion-searchbar>
   <ion-list>
-    <ion-card *ngFor="let item of cartService.searchedItems | async, let i = index" (click)="edit(i)">
+    <ion-card *ngFor="let item of cartService.searchedItems | async, let i = index" (click)="edit(item.id)">
       <img src="..\assets\img\{{item.pic}}" />
       <ion-card-header>
         <ion-card-subtitle>{{item.type}}</ion-card-subtitle>
@@ -19,6 +22,9 @@
               <b>{{ item.price}} BHD</b>
             </ion-label>
       </ion-card-header>
+      <ion-card-content>
+        <ion-label *ngIf="item.discount != 0">Price after discount: {{(1-item.discount) * item.price}} BHD</ion-label>
+      </ion-card-content>
     </ion-card>
   </ion-list>
 </ion-content>
