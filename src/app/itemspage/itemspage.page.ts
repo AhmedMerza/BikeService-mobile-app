@@ -5,6 +5,7 @@ import { CartService } from './../cart.service';
 import { ModalController } from '@ionic/angular';
 import { CartModalPage } from '../cart-modal/cart-modal.page';
 import { BehaviorSubject } from 'rxjs';
+import { WalletService } from '../wallet.service';
 
 import { Animation, AnimationController } from '@ionic/angular';
 import { filter, map } from 'rxjs/operators';
@@ -25,7 +26,7 @@ export class ItemspagePage implements OnInit {
  
   @ViewChild('cart', {static: false, read: ElementRef})fab: ElementRef;
 
-  constructor(public dataServ: DataService, private cartService: CartService, private modalCtrl: ModalController, public animationCtrl: AnimationController) {
+  constructor(public dataServ: DataService, private cartService: CartService, private modalCtrl: ModalController, public animationCtrl: AnimationController, public walletServ: WalletService) {
     this.searchedItems = cartService.getProducts();
     this.expandVal();
   }
