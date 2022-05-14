@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { Storage } from '@capacitor/storage';
 import { UserService, User } from '../user.service';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,7 @@ export class HomePage {
   type: string;
   loading: boolean = true;
 
-  constructor(public router: Router, public FBAuth: AngularFireAuth, public userServ: UserService) {
+  constructor(public router: Router, public FBAuth: AngularFireAuth, public userServ: UserService, private menu: MenuController) {
     this.load();
     Storage.get({key: 'email'}).then((res)=> {if (res.value == null) this.logout();})
     var email;
@@ -48,5 +49,18 @@ export class HomePage {
             });
   }
 
+  openFirst() {
+    this.menu.enable(true, 'first');
+    this.menu.open('first');
+  }
+
+  openEnd() {
+    this.menu.open('end');
+  }
+
+  openCustom() {
+    this.menu.enable(true, 'custom');
+    this.menu.open('custom');
+  }
 
 }

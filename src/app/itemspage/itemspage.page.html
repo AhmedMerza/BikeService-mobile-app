@@ -3,10 +3,11 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
-    <ion-title>itemspage</ion-title>
-    <ion-button slot="end" fill="clear">
+    <ion-title>{{title}}</ion-title>
+    <ion-button (click)="openFilter()" slot="end" fill="clear">
       <ion-icon name="filter"></ion-icon>
     </ion-button>
+
     <ion-button slot="end" fill="clear"  (click)="openCart()" #cart>
       <div class="cart-length">{{ cartItemCount | async }}</div>
       <ion-icon name="cart-outline"></ion-icon>
@@ -28,7 +29,6 @@
   </ion-card> -->
 
 
-  <!-- Ahmed edits-->
   <ion-fab vertical="top" horizontal="end" slot="fixed" style="margin-top: 40px">
     <ion-fab-button (click)="openCart()" #cart>
       <div class="cart-length">{{ cartItemCount | async }}</div>
@@ -36,15 +36,21 @@
     </ion-fab-button>
   </ion-fab>
   <ion-list>
-    <ion-card *ngFor="let item of searchedItems | async, let i = index">
+    <ion-card *ngFor="let item of cartService.searchedItems | async, let i = index">
       <img (click)="expand(i)" src="..\assets\img\{{item.pic}}" />
       <ion-card-header>
         <ion-card-subtitle>{{item.type}}</ion-card-subtitle>
-        <ion-card-title>{{item.name}}</ion-card-title>
+        <ion-card-title>
+          {{item.name}} 
+          <br><ion-label *ngIf="item.discount > 0" color="danger">Discount: {{item.discount | percent}}</ion-label>
+        </ion-card-title>
         <ion-row class="ion-align-items-center">
           <ion-col size="8">
             <ion-label color="secondary">
-              <b>{{ item.price }} BHD</b>
+              <b *ngIf="item.discount > 0">Before: </b>
+              <b *ngIf="item.discount == 0" class="price">{{ item.price}} BD</b>
+              <b *ngIf="item.discount > 0" class="price strikethrough">{{ item.price}} BD</b>
+              <b *ngIf="item.discount > 0"> - After: {{item.price - item.price* item.discount}} BD</b>
             </ion-label>
           </ion-col>
           <ion-col size="4" class="ion-text-right">
@@ -55,7 +61,7 @@
         </ion-row>
       </ion-card-header>
       <ion-card-content *ngIf="expandCard[i]">
-        {{item.info}}
+       <ion-label>{{item.info}}</ion-label>
       </ion-card-content>
     </ion-card>
   </ion-list>

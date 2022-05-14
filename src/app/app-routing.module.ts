@@ -33,7 +33,7 @@ const routes: Routes = [
   },
   {
 
-    path: 'itemspage',
+    path: 'itemspage/:i',
     loadChildren: () => import('./itemspage/itemspage.module').then(m => m.ItemspagePageModule)
   },
   {
@@ -52,6 +52,11 @@ const routes: Routes = [
     path: 'edit-item',
     loadChildren: () => import('./edit-item/edit-item.module').then( m => m.EditItemPageModule)
   },
+  {
+    path: 'filter',
+    loadChildren: () => import('./filter/filter.module').then( m => m.FilterPageModule)
+  },
+
 
 
 

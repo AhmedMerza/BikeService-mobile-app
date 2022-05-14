@@ -6,9 +6,12 @@ import { ModalController } from '@ionic/angular';
 import { CartModalPage } from '../cart-modal/cart-modal.page';
 import { BehaviorSubject } from 'rxjs';
 import { WalletService } from '../wallet.service';
+import { FilterPage } from '../filter/filter.page';
 
-import { Animation, AnimationController } from '@ionic/angular';
-import { filter, map } from 'rxjs/operators';
+import { AnimationController } from '@ionic/angular';
+import { map } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';   
+
 
 
 @Component({
@@ -18,18 +21,32 @@ import { filter, map } from 'rxjs/operators';
 })
 export class ItemspagePage implements OnInit {
 
-  searchedItems;
+  // searchedItems;
 
   cart = [];
   products = [];
   cartItemCount: BehaviorSubject<number>;
+  title: string;
  
   @ViewChild('cart', {static: false, read: ElementRef})fab: ElementRef;
 
-  constructor(public dataServ: DataService, private cartService: CartService, private modalCtrl: ModalController, public animationCtrl: AnimationController, public walletServ: WalletService) {
-    this.searchedItems = cartService.getProducts();
+  constructor(public dataServ: DataService, private cartService: CartService, private modalCtrl: ModalController, public animationCtrl: AnimationController, public walletServ: WalletService, private activeRoute: ActivatedRoute) {
+    var i = activeRoute.snapshot.paramMap.get('i')
+    if (i == '0') {
+      this.title = 'Items page'
+      cartService.searchedItems = cartService.getProducts();
+    } else {
+      this.title = 'Offers'
+      cartService.searchedItems = this.cartService.getProducts().pipe(
+        map(
+          (products) => products.filter((product)=> {
+            return product.discount > 0
+          })
+          ));
+    }
     this.expandVal();
   }
+
 
   ngOnInit() {
     // this.products = this.cartService.getProducts();
@@ -54,54 +71,40 @@ export class ItemspagePage implements OnInit {
       // this.searchedItems = items.filter((item) => {
       //   return (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
       // })
-      this.searchedItems = items.pipe(map((item) => item.filter((a)=> {return (a.name.toLowerCase().indexOf(val.toLowerCase()) > -1);})))
+      this.cartService.searchedItems = items.pipe(map((item) => item.filter((a)=> {return (a.name.toLowerCase().indexOf(val.toLowerCase()) > -1);})))
 
     }
-    else this.searchedItems = this.cartService.getProducts();
+    else this.cartService.searchedItems = this.cartService.getProducts();
     this.expandVal();
   }
   
 
   expandVal() {
-    for (let i = 0; i < this.searchedItems.length; i++)
+    for (let i = 0; i < this.cartService.searchedItems.length; i++)
       this.expandCard.push(false)
   }
 
   addToCart(product) {
     this.cartService.addToCart(product);
-    this.animateCSS('tada');
   }
  
   async openCart() {
-    this.animateCSS('bounceOutLeft', true);
- 
     let modal = await this.modalCtrl.create({
       component: CartModalPage,
       cssClass: 'cart-modal'
     });
     modal.onWillDismiss().then(() => {
-      this.fab.nativeElement.classList.remove('animated', 'bounceOutLeft')
-      this.animateCSS('bounceInLeft');
     });
     modal.present();
   }
  
-  animateCSS(animationName, keepAnimated = false) {
-    const node = this.fab.nativeElement;
-    // node.classList.add('animated', animationName)
-    
-    // //https://github.com/daneden/animate.css
-    // function handleAnimationEnd() {
-    //   if (!keepAnimated) {
-    //     node.classList.remove('animated', animationName);
-    //   }
-    //   node.removeEventListener('animationend', handleAnimationEnd)
-    // }
-    // node.addEventListener('animationend', handleAnimationEnd)
-    const animatoin = this.animationCtrl.create().addElement(node).duration(1000).fromTo('opacity', '1', '0')
+  async openFilter() {
+    let modal = await this.modalCtrl.create({
+      component: FilterPage,
+      cssClass: 'cart-modal'
+    });
+    modal.present();
   }
 
-}
 
-// @keyframes tada{0%{transform:scaleX(1)}10%,20%{transform:scale3d(.9,.9,.9) rotate(-3deg)}30%,50%,70%,90%{transform:scale3d(1.1,1.1,1.1) rotate(3deg)}40%,60%,80%{transform:scale3d(1.1,1.1,1.1) rotate(-3deg)}to{transform:scaleX(1)}}
-// .animate__tada{animation-name:tada}
+}

@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>filter</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-list>
+  <ion-item-divider>Price</ion-item-divider>
+  <ion-item style="text-align: center">
+    <ion-label>From </ion-label>
+    <ion-input type="number"  (ionChange)="checkPrice()" [(ngModel)]="cartService.min"></ion-input>
+    <ion-label>to </ion-label>
+    <ion-input type="number" (ionChange)="checkPrice()" [(ngModel)]="cartService.max"></ion-input>
+  </ion-item>
+  <ion-item-divider>Type</ion-item-divider>
+  <ion-item>
+  <ion-select [(ngModel)]="cartService.type" multiple="true">
+    <ion-select-option value="bike">Bike</ion-select-option>
+    <ion-select-option value="accessories">Accessories</ion-select-option>
+    <ion-select-option value="saddle">Saddle</ion-select-option>
+    <ion-select-option value="tire">tire</ion-select-option>
+  </ion-select>
+  </ion-item>
+</ion-list>
+
+<br><br><br>
+
+  <div style="display: flex; justify-content: center;">
+    <ion-button (click)="filter()">
+      <ion-icon name="filter-circle-outline"></ion-icon>
+     &nbsp; Filter
+    </ion-button>
+  </div>
+  
+</ion-content>
