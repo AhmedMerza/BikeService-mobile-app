@@ -26,6 +26,7 @@ export class LogInPage implements OnInit {
 
 
   login () {
+    Storage.clear();
     this.FBAuth.signInWithEmailAndPassword(this.email, this.password).then(
       () => { this.error = ''; 
       this.password = ''; 
