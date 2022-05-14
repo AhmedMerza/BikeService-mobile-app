@@ -32,7 +32,7 @@ export class CartModalPage implements OnInit {
   }
  
   getTotal() {
-    return this.cart.reduce((i, j) => i + j.price * j.amount, 0);
+    return this.cart.reduce((i, j) => i + j.price * j.amount * (1-j.discount), 0);
   }
  
   close() {
@@ -44,14 +44,12 @@ export class CartModalPage implements OnInit {
     var money = this.getTotal();
     if (money > this.walletServ.getWallet()) this.alert("Money issue", "You don't have enough money on your wallet to complete this transaction!", ['OK']);
     else{
-      console.log(this.loading)
       await new Promise(resolve => setTimeout(resolve, 3000));
-     this.loading = false;
-     console.log(this.loading)
       this.walletServ.setWallet(this.walletServ.getWallet() - money);
       this.cartService.checkOut();
       this.alert('Thanks for your Order!', 'We will deliver your items as soon as possible', ['OK'])
     }
+    this.loading = false;
   }
 
   async alert(header?: string, message?: string, buttons?) {
