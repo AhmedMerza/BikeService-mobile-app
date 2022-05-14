@@ -40,6 +40,10 @@ export class CartModalPage implements OnInit {
   }
  
   async checkout() {
+    if (this.cart.length == 0) {
+      this.alert('No Product in the cart', 'Please add products to your cart!', ['OK'])
+      return;
+    }
     this.loading = true;
     var money = this.getTotal();
     if (money > this.walletServ.getWallet()) this.alert("Money issue", "You don't have enough money on your wallet to complete this transaction!", ['OK']);

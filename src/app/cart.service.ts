@@ -39,6 +39,7 @@ export class CartService {
 
   id;
   searchedItems;
+  i;
  
   products: Observable<Product[]>;
   productCollection: AngularFirestoreCollection<Product>;

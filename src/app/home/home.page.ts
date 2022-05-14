@@ -17,7 +17,7 @@ export class HomePage {
 
   constructor(public router: Router, public FBAuth: AngularFireAuth, public userServ: UserService, private menu: MenuController) {
     this.load();
-    Storage.get({key: 'email'}).then((res)=> {if (res.value == null) this.logout();})
+    // Storage.get({key: 'email'}).then((res)=> {if (res.value == null) this.logout();})
     var email;
     Storage.get({key: 'email'}).then((res=> {
       email = res.value;
@@ -28,8 +28,8 @@ export class HomePage {
           this.type = user.type;
       })
     }));
-
   }
+
 
   async logout() {
     Storage.clear();

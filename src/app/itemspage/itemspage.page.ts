@@ -31,8 +31,8 @@ export class ItemspagePage implements OnInit {
   @ViewChild('cart', {static: false, read: ElementRef})fab: ElementRef;
 
   constructor(public dataServ: DataService, private cartService: CartService, private modalCtrl: ModalController, public animationCtrl: AnimationController, public walletServ: WalletService, private activeRoute: ActivatedRoute) {
-    var i = activeRoute.snapshot.paramMap.get('i')
-    if (i == '0') {
+    cartService.i = activeRoute.snapshot.paramMap.get('i')
+    if (cartService.i == '0') {
       this.title = 'Items page'
       cartService.searchedItems = cartService.getProducts();
     } else {
