@@ -50,11 +50,11 @@
             </ion-col>
           </ion-row>
           <ion-row>
-            <ion-col size="8">
+            <ion-col size="5">
               <b>{{ p.name }}</b>
             </ion-col>
-            <ion-col size="4" class="ion-text-end">
-              {{ p.amount * p.price }}BD
+            <ion-col size="7" class="ion-text-end">
+              {{ p.amount * p.price * (1-p.discount) | number: "0.3"}}BD
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -62,11 +62,11 @@
       <ion-item>
         <ion-grid>
           <ion-row>
-            <ion-col size="8">
+            <ion-col size="4">
               Total:
             </ion-col>
-            <ion-col size="4" class="ion-text-end">
-              {{ getTotal() }}BD
+            <ion-col size="8" class="ion-text-end">
+              {{ getTotal() | number: "0.3"}}BD
             </ion-col>
           </ion-row>
         </ion-grid>

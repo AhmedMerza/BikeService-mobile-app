@@ -29,6 +29,10 @@ export class CartService {
   //   { id: 2, type: "ACCESSORIES", name: "Phone handle", info: "Handler to mount on the bike it fits all types of phones ", pic: "phonehand.jpg" , price: 5, discount: 0  },
   //   { id: 3, type: "SADDLE", name: "Black Saddle", info: "Classic Black bicylce saddle for regular and sports uses ", pic: "saddle1.jpg" , price: 35, discount: 0  }
   // ];
+
+  min: number = 0;
+  max: number;
+  type: string[]= ['bike', 'accessories', 'saddle', 'tire']
  
   private cart = [];
   private cartItemCount = new BehaviorSubject(0);

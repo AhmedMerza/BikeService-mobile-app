@@ -26,7 +26,7 @@
   </ion-content>
 </ion-menu>
 
-<ion-page class="ion-page" id="main-content">
+<div class="ion-page" id="main-content">
   <ion-header>
     <ion-toolbar>
       <ion-buttons slot="start">
@@ -49,7 +49,7 @@
           </ion-button>
         </ion-col>
         <ion-col size="5" *ngIf="type=='user'">
-          <ion-button expand="clear" routerLink="/itemspage">
+          <ion-button expand="clear" routerLink="/itemspage/0">
             <ion-icon name="pricetags-outline"></ion-icon> &nbsp; ITEMS
           </ion-button>
         </ion-col>
@@ -61,14 +61,16 @@
       </ion-row>
       <br><br><br>
       <ion-row class="ion-justify-content-center">
+        <ion-col size="5" *ngIf="type=='user'">
+          <ion-button expand="clear" routerLink="/itemspage/1">
+            <ion-icon name="pricetag-outline"></ion-icon> &nbsp; OFFERS
+          </ion-button>
+        </ion-col>
         <ion-col size="5">
           <ion-button expand="clear" routerLink="/admin-panel">
             <ion-icon name="construct-outline"></ion-icon> &nbsp; Dashboard
           </ion-button>
-        </ion-col>
-        <ion-col size="5">
-          <ion-button expand="block"> </ion-button>
-        </ion-col>
+        </ion-col> 
       </ion-row>
       <br><br><br>
       <ion-row class="ion-justify-content-center">
@@ -86,6 +88,4 @@
     </div>
 
   </ion-content>
-</ion-page>
-
-<ion-menu-controller></ion-menu-controller>
+</div>

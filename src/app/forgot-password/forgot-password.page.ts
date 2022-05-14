@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import {UserService, User} from '../user.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ForgotPasswordPage implements OnInit {
 
-  constructor() { }
+  email;
+
+  constructor(public FBAuth: AngularFireAuth, public userServ: UserService) { }
 
   ngOnInit() {
+  }
+
+  forgetPassword () {;
+    if (this.email == null) return;;
+    console.log('Forgot Password')
+    this.FBAuth.sendPasswordResetEmail(this.email).then(() => {alert("An email has been sent to your account!")})
   }
 
 }
