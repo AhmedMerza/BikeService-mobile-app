@@ -47,7 +47,7 @@ export class FilterPage implements OnInit {
     this.cartService.searchedItems = this.cartService.getProducts().pipe(
       map(
         (products) => products.filter((product)=> {
-          return (this.cartService.type.find((element) => {return element.toLowerCase() == product.type.toLowerCase()}) && ( this.cartService.max == null || (product.price >= this.cartService.min && product.price <= this.cartService.max)))
+          return (this.cartService.type.find((element) => {return element.toLowerCase() == product.type.toLowerCase()}) && ( this.cartService.max == null || ((product.price - product.price*product.discount) >= this.cartService.min && (product.price - product.price*product.discount) <= this.cartService.max)))
         })
         ));
       this.modalCtrl.dismiss()

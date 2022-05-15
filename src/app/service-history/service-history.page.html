@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>History</ion-title>
+    <ion-button fill="clear" slot="end">
+      <ion-icon name="wallet-outline"></ion-icon>
+      &nbsp;
+      {{walletServ.wallet}} BD
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-list *ngIf="!noItem">
+  <ion-card *ngFor="let service of services, let i = index">
+    <ion-card-header>
+      <ion-card-subtitle>{{service.issues}}</ion-card-subtitle>
+      <ion-card-title>{{service.bikeType}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-label>Location: {{service.location}}</ion-label> <br>
+      <ion-label>Status: {{service.state}}</ion-label> <br>
+      <ion-label>Service type: {{service.serviceType}}</ion-label> <br>
+      <ion-label *ngIf="service.pickUpDateTime != ''">Date and Time: {{service.pickUpDateTime | date: 'short' }}</ion-label>
+   
+      <div *ngIf="service.state.toLowerCase() == 'rate time'">
+        <div style="display: flex; justify-content: space-around;">
+          <ion-button style="--padding-start: 1px;" *ngFor="let r of RateArray[i]" fill="clear"
+      (click)="setRating(r.value, i)">
+      <ion-icon name="{{r.icon}}" ></ion-icon>  
+        </ion-button>
+      </div>
+  
+      <div style="display: flex; justify-content: center;">
+        <ion-button (click)="rate(i)">
+          Rate
+        </ion-button>
+      </div>
+      </div>
+      <div *ngIf="service.state.toLowerCase() == 'pay time'" style="display: flex; justify-content: center;">
+        <ion-button (click)="pay(i)">
+          Pay
+        </ion-button>
+      </div>
+      
+
+    </ion-card-content>
+    
+  </ion-card>
+</ion-list>
+<div style="display: flex; justify-content: center; align-items: center;">
+  <ion-label *ngIf="noItem">No service request</ion-label>
+</div>
+</ion-content>

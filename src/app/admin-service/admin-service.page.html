@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Service</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="!noItem">
+    <ion-card *ngFor="let service of services | async, let i = index">
+      <ion-card-header>
+        <ion-card-subtitle>{{service.issues}}</ion-card-subtitle>
+        <ion-card-title>{{service.bikeType}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-label>Location: {{service.location}}</ion-label> <br>
+        <ion-item>
+          <ion-label>Status:</ion-label>
+          <ion-select [(ngModel)]="service.state">
+            <ion-select-option value="Processing">Processing</ion-select-option>
+            <ion-select-option value="OnSite repair">OnSite repair</ion-select-option>
+            <ion-select-option value="Workshop repair">Workshop repair</ion-select-option>
+            <ion-select-option value="Pay time">Pay time</ion-select-option>
+            <ion-select-option value="Rate time">Rate time</ion-select-option>
+            <ion-select-option value="Done">Done</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-label>Service type: {{service.serviceType}}</ion-label> <br>
+        <ion-label *ngIf="service.pickUpDateTime != ''">Date and Time: {{service.pickUpDateTime | date: 'short' }}</ion-label>
+
+        <br>
+        <br>
+        <br>
+
+       <div style="display: flex; justify-content: center">
+        <ion-button (click)="update(service)">
+          <ion-icon name="arrow-up-circle-outline"></ion-icon>
+          &nbsp; Update 
+        </ion-button>
+       </div>
+        
+  
+      </ion-card-content>
+      
+    </ion-card>
+  </ion-list>
+</ion-content>
