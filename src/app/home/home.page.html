@@ -55,8 +55,13 @@
             <ion-icon name="pricetags-outline"></ion-icon> &nbsp; ITEMS
           </ion-button>
         </ion-col>
-        <ion-col size="5">
+        <ion-col size="5" *ngIf="type=='user'">
           <ion-button expand="clear" routerLink="/request-service">
+            <ion-icon name="construct-outline"></ion-icon> &nbsp; SERVICE
+          </ion-button>
+        </ion-col>
+        <ion-col size="5" *ngIf="type=='admin'">
+          <ion-button expand="clear" routerLink="/admin-service">
             <ion-icon name="construct-outline"></ion-icon> &nbsp; SERVICE
           </ion-button>
         </ion-col>

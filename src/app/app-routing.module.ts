@@ -55,7 +55,15 @@ const routes: Routes = [
   {
     path: 'filter',
     loadChildren: () => import('./filter/filter.module').then( m => m.FilterPageModule)
+  },  {
+    path: 'service-history',
+    loadChildren: () => import('./service-history/service-history.module').then( m => m.ServiceHistoryPageModule)
   },
+  {
+    path: 'admin-service',
+    loadChildren: () => import('./admin-service/admin-service.module').then( m => m.AdminServicePageModule)
+  },
+
 
 
 

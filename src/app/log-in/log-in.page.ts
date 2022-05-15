@@ -13,8 +13,8 @@ import { WalletService } from '../wallet.service';
 
 export class LogInPage implements OnInit {
 
-  email = "xdummyaccoun@gmail.com" 
-  password = "xdAccount";
+  email; 
+  password;
   error ='';
 
   constructor(public FBAuth: AngularFireAuth, public router: Router, public userServ: UserService, public walletServ: WalletService) {
