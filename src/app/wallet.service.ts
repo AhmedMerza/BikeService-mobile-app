@@ -9,7 +9,7 @@ export class WalletService  {
 
   private wallet: number;
   private email: string;
-  private userID: string;
+  public userID: string;
   loading: boolean = true;
   private userId: string;
 

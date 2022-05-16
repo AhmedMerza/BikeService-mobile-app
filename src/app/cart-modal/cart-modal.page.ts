@@ -2,6 +2,7 @@ import { Product, CartService } from './../cart.service';
 import { Component, OnInit } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
 import { WalletService } from '../wallet.service';
+import { OrdersService, Order } from '../orders.service';
  
 @Component({
   selector: 'app-cart-modal',
@@ -13,7 +14,7 @@ export class CartModalPage implements OnInit {
   cart = [];
   loading: boolean = false;
  
-  constructor(private cartService: CartService, private modalCtrl: ModalController, private alertCtrl: AlertController, public walletServ: WalletService) { }
+  constructor(private cartService: CartService, private modalCtrl: ModalController, private alertCtrl: AlertController, public walletServ: WalletService, public orderServ: OrdersService) { }
  
   ngOnInit() {
     this.cart = this.cartService.getCart();
@@ -48,6 +49,21 @@ export class CartModalPage implements OnInit {
     var money = this.getTotal();
     if (money > this.walletServ.getWallet()) this.alert("Money issue", "You don't have enough money on your wallet to complete this transaction!", ['OK']);
     else{
+      var itemsID: string[] = [];
+      var prices: number[] = []
+      var quantities: number[] = []
+      for (let i = 0; i < this.cart.length; i++) {
+        prices.push((this.cart[i].price - this.cart[i].discount* this.cart[i].price)*this.cart[i].amount)
+        itemsID.push(this.cart[i].id)
+        quantities.push(this.cart[i].amount)
+      }
+      this.orderServ.addOrder({
+  itemsID: itemsID, quantities: quantities,
+  prices: prices,
+  totalPrice: money,
+  state: 'On the way',
+  userID: this.walletServ.userID
+});
       await new Promise(resolve => setTimeout(resolve, 3000));
       this.walletServ.setWallet(this.walletServ.getWallet() - money);
       this.cartService.checkOut();

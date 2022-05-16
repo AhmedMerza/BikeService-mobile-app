@@ -8,26 +8,26 @@
 </ion-header>
 
 <ion-content>
-  <form>
-    <ion-item lines="full">
+  <form [formGroup]="registerForm" (ngSubmit)="register(registerForm.value)">
+    <!-- <ion-item lines="full">
       <ion-label position="floating">First name</ion-label>
-      <ion-input name="fName" [(ngModel)]="fName" type="text" required></ion-input>
+      <ion-input name="fName" formControlName="fName" type="text" required></ion-input>
     </ion-item>
     <ion-item lines="full">
       <ion-label position="floating">Last name</ion-label>
-      <ion-input name="lName" [(ngModel)]="lName" type="text" required></ion-input>
-    </ion-item>
+      <ion-input name="lName" formControlName="lName" type="text" required></ion-input>
+    </ion-item> -->
     <ion-item lines="full">
       <ion-label position="floating">Email</ion-label>
-      <ion-input name="email" [(ngModel)]="email" type="text" required></ion-input>
+      <ion-input name="email" formControlName="email" type="text" required></ion-input>
     </ion-item>
     <ion-item lines="full">
       <ion-label position="floating">Password</ion-label>
-      <ion-input name="password" [(ngModel)]="password" type="password" required></ion-input>
+      <ion-input name="password" formControlName="password" type="password" required></ion-input>
     </ion-item>
     <ion-item lines="full">
       <ion-label position="floating">Confirm Password</ion-label>
-      <ion-input name="password1" [(ngModel)]="password1" type="password" required></ion-input>
+      <ion-input name="password1" formControlName="password1" type="password" required></ion-input>
     </ion-item>
     <small ngDefaultControl name="error" style="margin-left: 20px; color: red;">{{error}}</small>
     <ion-row>
