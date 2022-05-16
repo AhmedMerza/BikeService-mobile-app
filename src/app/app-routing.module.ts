@@ -63,6 +63,10 @@ const routes: Routes = [
     path: 'admin-service',
     loadChildren: () => import('./admin-service/admin-service.module').then( m => m.AdminServicePageModule)
   },
+  {
+    path: 'selffix',
+    loadChildren: () => import('./selffix/selffix.module').then( m => m.SelffixPageModule)
+  },
 
 
 
