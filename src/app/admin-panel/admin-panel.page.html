@@ -10,10 +10,10 @@
 <ion-content>
   <div class="ion-text-center">
 
-    <ion-grid class="ongoing-orders">
+    <ion-grid class="ongoing-orders box box1">
       <ion-row class="ion-justify-content-between">
         <ion-col size="9">
-          <div>Ongoing orders</div>
+          <div>Ongoing services</div>
         </ion-col>
         <ion-col size="3">
           <div>8</div>
@@ -22,120 +22,43 @@
     </ion-grid>
 
     <br>
+    <ion-item>
+      <ion-label>Show statistics for: </ion-label>
+      <ion-select>
+        <ion-select-option value="this-month">This month</ion-select-option>
+        <ion-select-option value="this-year">This year</ion-select-option>
+      </ion-select>
+    </ion-item>
+
     <br>
 
     <ion-grid class="">
       <ion-row>
-        <ion-col size="6">Total Orders <br> <span style="font-size: xx-large;">10</span></ion-col>
-        <ion-col size="6">Total Revenue <br> <span style="font-size: xx-large;">BD10</span></ion-col>
+        <ion-col class="box1" size="6">Total Orders <br> <span style="font-size: xx-large;">10</span></ion-col>
+        <ion-col class="box2" size="6">Total Revenue <br> <span style="font-size: xx-large;">BD10</span></ion-col>
       </ion-row>
-
-      <ion-list>
-        <ion-item-divider></ion-item-divider>
-        <ion-item>
-          <h1 style="font-weight: bolder;">Top 10 orders/services:</h1>
-        </ion-item>
-        <ion-row class="ion-margin-vertical">
-          <ion-col size="6">
-            <ion-label><span style="font-weight: bold; font-size: large;">Order/Service</span></ion-label>
-          </ion-col>
-          <ion-col size="6">
-            <ion-label><span style="font-weight: bold; font-size: large;">Number of orders</span></ion-label>
-          </ion-col>
-        </ion-row>
-
-        <ion-row class="ion-margin-vertical">
-          <ion-col size="6">
-            <ion-label>Service 1</ion-label>
-          </ion-col>
-          <ion-col size="6">
-            <ion-label>25</ion-label>
-          </ion-col>
-        </ion-row>
-
-        <ion-row class="ion-margin-vertical">
-          <ion-col size="6">
-            <ion-label>Service 2</ion-label>
-          </ion-col>
-          <ion-col size="6">
-            <ion-label>23</ion-label>
-          </ion-col>
-        </ion-row>
-
-        <ion-row class="ion-margin-vertical">
-          <ion-col size="6">
-            <ion-label>order 1</ion-label>
-          </ion-col>
-          <ion-col size="6">
-            <ion-label>22</ion-label>
-          </ion-col>
-        </ion-row>
-
-        <ion-row class="ion-margin-vertical">
-          <ion-col size="6">
-            <ion-label>Service 3</ion-label>
-          </ion-col>
-          <ion-col size="6">
-            <ion-label>19</ion-label>
-          </ion-col>
-        </ion-row>
-
-        <ion-row class="ion-margin-vertical">
-          <ion-col size="6">
-            <ion-label>order 2</ion-label>
-          </ion-col>
-          <ion-col size="6">
-            <ion-label>12</ion-label>
-          </ion-col>
-        </ion-row>
-
-        <ion-row class="ion-margin-vertical">
-          <ion-col size="6">
-            <ion-label>Service 4</ion-label>
-          </ion-col>
-          <ion-col size="6">
-            <ion-label>10</ion-label>
-          </ion-col>
-        </ion-row>
-
-        <ion-row class="ion-margin-vertical">
-          <ion-col size="6">
-            <ion-label>Service 5</ion-label>
-          </ion-col>
-          <ion-col size="6">
-            <ion-label>7</ion-label>
-          </ion-col>
-        </ion-row>
-
-        <ion-row class="ion-margin-vertical">
-          <ion-col size="6">
-            <ion-label>Service 6</ion-label>
-          </ion-col>
-          <ion-col size="6">
-            <ion-label>3</ion-label>
-          </ion-col>
-        </ion-row>
-
-        <ion-row class="ion-margin-vertical">
-          <ion-col size="6">
-            <ion-label>Order 3</ion-label>
-          </ion-col>
-          <ion-col size="6">
-            <ion-label>2</ion-label>
-          </ion-col>
-        </ion-row>
-
-        <ion-row class="ion-margin-vertical">
-          <ion-col size="6">
-            <ion-label>Order 4</ion-label>
-          </ion-col>
-          <ion-col size="6">
-            <ion-label>1</ion-label>
-          </ion-col>
-        </ion-row>
-
-      </ion-list>
     </ion-grid>
+
+
+    <div class="box box1">
+      <apx-chart [chart]="options1.chart" [series]="options1.series" [dataLabels]="options1.dataLabels"
+        [stroke]="options1.stroke" [title]="options1.title" [xaxis]="options1.xaxis"></apx-chart>
+    </div>
+
+    <div class="box box2">
+      <apx-chart [chart]="options4.chart" [series]="options4.series" [dataLabels]="options4.dataLabels"
+        [stroke]="options4.stroke" [title]="options4.title" [xaxis]="options4.xaxis"></apx-chart>
+    </div>
+
+    <apx-chart [chart]='options2.chart' [series]="options2.series" [responsive]="options2.responsive"
+      [title]="options2.title"></apx-chart>
+
+    <apx-chart [chart]="options3.chart" [series]="options3.series" [dataLabels]="options3.dataLabels"
+      [title]="options3.title" [colors]="options3.colors" [xaxis]="options3.xaxis"></apx-chart>
+    <br>
+
+
+
 
   </div>
 

@@ -1,13 +1,254 @@
 import { Component, OnInit } from '@angular/core';
+import { ApexChart, ApexAnnotations, ApexDataLabels, ApexAxisChartSeries, ApexNonAxisChartSeries, ApexStroke, ApexLegend, ApexFill, ApexTooltip, ApexPlotOptions, ApexResponsive, ApexXAxis, ApexYAxis, ApexGrid, ApexStates, ApexTitleSubtitle, ApexTheme } from 'ng-apexcharts';
+
+export type ChartOptions = {
+  chart: ApexChart;
+  annotations: ApexAnnotations;
+  colors: string[];
+  dataLabels: ApexDataLabels;
+  series: ApexAxisChartSeries | ApexNonAxisChartSeries;
+  stroke: ApexStroke;
+  labels: string[];
+  legend: ApexLegend;
+  fill: ApexFill;
+  tooltip: ApexTooltip;
+  plotOptions: ApexPlotOptions;
+  responsive: ApexResponsive[];
+  xaxis: ApexXAxis;
+  yaxis: ApexYAxis | ApexYAxis[];
+  grid: ApexGrid;
+  states: ApexStates;
+  title: ApexTitleSubtitle;
+  subtitle: ApexTitleSubtitle;
+  theme: ApexTheme;
+}
+
 
 @Component({
   selector: 'app-admin-panel',
   templateUrl: './admin-panel.page.html',
   styleUrls: ['./admin-panel.page.scss'],
 })
+
 export class AdminPanelPage implements OnInit {
 
-  constructor() { }
+  public options1: Partial<ChartOptions>;
+  public options2: Partial<ChartOptions>;
+  public options3: Partial<ChartOptions>;
+  public options4: Partial<ChartOptions>;
+
+  constructor() {
+    this.spackLine()
+  }
+
+  spackLine() {
+
+    this.options4 = {
+      series: [{
+        name: "Desktops",
+        data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+      }],
+      chart: {
+        height: 350,
+        type: 'line',
+        zoom: {
+          enabled: false
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: 'straight'
+      },
+      title: {
+        text: 'Amount of revenue this year',
+        align: 'left'
+      },
+      grid: {
+        row: {
+          colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+          opacity: 0.5
+        },
+      },
+      xaxis: {
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+      }
+    };
+    
+    this.options3 = {
+      series: [{
+        name: '12AM',
+        data: [23, 34, 10, 60, 50, 30, 50]
+      },
+      {
+        name: '1AM',
+        data: [23, 34, 10, 60, 50, 30, 50]
+      },
+      {
+        name: '2AM',
+        data: [23, 34, 10, 60, 50, 30, 50]
+      },
+      {
+        name: '3AM',
+        data: [23, 34, 10, 60, 50, 30, 50]
+      },
+      {
+        name: '4AM',
+        data: [23, 34, 10, 60, 50, 30, 50]
+      },
+      {
+        name: '5AM',
+        data: [23, 34, 10, 60, 50, 30, 50]
+      },
+      {
+        name: '6AM',
+        data: [23, 34, 10, 60, 50, 30, 50]
+      },
+      {
+        name: '7AM',
+        data: [23, 34, 10, 60, 50, 30, 50]
+      },
+      {
+        name: '8AM',
+        data: [23, 34, 10, 60, 50, 30, 50]
+      },
+      {
+        name: '9AM',
+        data: [23, 34, 10, 60, 50, 30, 50]
+      },
+      {
+        name: '10AM',
+        data: [23, 34, 10, 60, 50, 30, 50]
+      },
+      {
+        name: '11AM',
+        data: [23, 34, 10, 60, 50, 30, 50]
+      },
+      {
+        name: '12PM',
+        data: [23, 34, 10, 60, 50, 30, 50]
+      },
+      {
+        name: '1PM',
+        data: [23, 34, 10, 60, 50, 30, 50]
+      },
+      {
+        name: '2PM',
+        data: [23, 34, 10, 60, 50, 30, 50]
+      },
+      {
+        name: '3PM',
+        data: [23, 34, 10, 60, 50, 30, 50]
+      },
+      {
+        name: '4PM',
+        data: [23, 34, 10, 60, 50, 30, 50]
+      },
+      {
+        name: '5PM',
+        data: [23, 34, 10, 60, 50, 30, 50]
+      },
+      {
+        name: '6PM',
+        data: [23, 34, 10, 60, 50, 30, 50]
+      },
+      {
+        name: '7PM',
+        data: [23, 34, 10, 60, 50, 30, 50]
+      },
+      {
+        name: '8PM',
+        data: [23, 34, 10, 60, 50, 30, 50]
+      },
+      {
+        name: '9PM',
+        data: [23, 34, 10, 60, 50, 30, 50]
+      },
+      {
+        name: '10PM',
+        data: [23, 34, 10, 60, 50, 30, 50]
+      },
+      {
+        name: '11PM',
+        data: [23, 34, 10, 60, 50, 30, 50]
+      }
+      ],
+      chart: {
+        height: 700,
+        type: 'heatmap',
+      },
+      dataLabels: {
+        enabled: false
+      },
+      colors: ["#008FFB"],
+      title: {
+        text: 'HeatMap Chart (Single color)'
+      },
+      xaxis: {
+        categories: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fi', 'Sa'],
+      }
+    };
+
+    this.options2 = {
+      series: [44, 55, 41, 17, 15],
+      chart: {
+        type: 'donut',
+      },
+      responsive: [{
+        breakpoint: 480,
+        options: {
+          chart: {
+            width: 410
+          },
+          legend: {
+            position: 'bottom'
+          }
+        }
+      }],
+      title: {
+        text: "Categories analysis"
+      },
+      
+
+    };
+
+    this.options1 = {
+      series: [{
+        name: "Desktops",
+        data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
+      }],
+      chart: {
+        height: 350,
+        type: 'line',
+        zoom: {
+          enabled: false
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: 'straight'
+      },
+      title: {
+        text: 'Number of orders this year',
+        align: 'left'
+      },
+      grid: {
+        row: {
+          colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+          opacity: 0.5
+        },
+      },
+      xaxis: {
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+      }
+    };
+
+  };
+
+
 
   ngOnInit() {
   }

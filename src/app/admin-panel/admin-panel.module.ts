@@ -8,12 +8,16 @@ import { AdminPanelPageRoutingModule } from './admin-panel-routing.module';
 
 import { AdminPanelPage } from './admin-panel.page';
 
+import { NgApexchartsModule } from 'ng-apexcharts';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    AdminPanelPageRoutingModule
+    AdminPanelPageRoutingModule,
+    NgApexchartsModule
+
   ],
   declarations: [AdminPanelPage]
 })

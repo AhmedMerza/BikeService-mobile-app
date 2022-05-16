@@ -28,7 +28,9 @@
     "@capacitor/storage": "^1.2.5",
     "@ionic/angular": "^6.0.0",
     "animate.css": "^4.1.1",
+    "apexcharts": "^3.35.2",
     "firebase": "^9.8.1",
+    "ng-apexcharts": "^1.7.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",
     "zone.js": "~0.11.4"
