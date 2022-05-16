@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApexChart, ApexAnnotations, ApexDataLabels, ApexAxisChartSeries, ApexNonAxisChartSeries, ApexStroke, ApexLegend, ApexFill, ApexTooltip, ApexPlotOptions, ApexResponsive, ApexXAxis, ApexYAxis, ApexGrid, ApexStates, ApexTitleSubtitle, ApexTheme } from 'ng-apexcharts';
+import { map } from 'rxjs/operators';
+import { OrdersService} from '../orders.service';
 
 export type ChartOptions = {
   chart: ApexChart;
@@ -31,6 +33,8 @@ export type ChartOptions = {
 })
 
 export class AdminPanelPage implements OnInit {
+
+  dataStore;
 
   public options1: Partial<ChartOptions>;
   public options2: Partial<ChartOptions>;
@@ -147,7 +151,7 @@ export class AdminPanelPage implements OnInit {
     }
   ];
 
-  constructor() {
+  constructor(public orderServ: OrdersService) {
     this.spackLine()
   }
 
@@ -359,6 +363,13 @@ export class AdminPanelPage implements OnInit {
   };
 
   ngOnInit() {
+
+     this.orderServ.getOrders().subscribe((orders)=> {
+       this.dataStore = orders
+       console.log(this.dataStore)
+      //  do your calculation here
+      })
+
     const d = new Date();
     var month = d.getMonth() + 1;	// Month	[mm]	(1 - 12)
     var day = d.getDate();		// Day		[dd]	(1 - 31)
