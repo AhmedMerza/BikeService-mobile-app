@@ -24,9 +24,9 @@
     <br>
     <ion-item>
       <ion-label>Show statistics for: </ion-label>
-      <ion-select>
-        <ion-select-option value="this-month">This month</ion-select-option>
-        <ion-select-option value="this-year">This year</ion-select-option>
+      <ion-select (ionChange)="changePeriod()" [(ngModel)]="showStatsFor">
+        <ion-select-option value="thisMonth">This month</ion-select-option>
+        <ion-select-option value="thisYear">This year</ion-select-option>
       </ion-select>
     </ion-item>
 
@@ -41,20 +41,22 @@
 
 
     <div class="box box1">
-      <apx-chart [chart]="options1.chart" [series]="options1.series" [dataLabels]="options1.dataLabels"
-        [stroke]="options1.stroke" [title]="options1.title" [xaxis]="options1.xaxis"></apx-chart>
+      <apx-chart [chart]="numOfOrders.chart" [series]="numOfOrders.series" [dataLabels]="numOfOrders.dataLabels"
+        [stroke]="numOfOrders.stroke" [title]="numOfOrders.title" [xaxis]="numOfOrders.xaxis"></apx-chart>
     </div>
 
     <div class="box box2">
-      <apx-chart [chart]="options4.chart" [series]="options4.series" [dataLabels]="options4.dataLabels"
-        [stroke]="options4.stroke" [title]="options4.title" [xaxis]="options4.xaxis"></apx-chart>
+      <apx-chart [chart]="revenueChart.chart" [series]="revenueChart.series" [dataLabels]="revenueChart.dataLabels"
+        [stroke]="revenueChart.stroke" [title]="revenueChart.title" [xaxis]="revenueChart.xaxis"></apx-chart>
     </div>
 
+    <!--
     <apx-chart [chart]='options2.chart' [series]="options2.series" [responsive]="options2.responsive"
       [title]="options2.title"></apx-chart>
+      -->
 
-    <apx-chart [chart]="options3.chart" [series]="options3.series" [dataLabels]="options3.dataLabels"
-      [title]="options3.title" [colors]="options3.colors" [xaxis]="options3.xaxis"></apx-chart>
+    <apx-chart [chart]="heatmapChart.chart" [series]="heatmapChart.series" [dataLabels]="heatmapChart.dataLabels"
+      [title]="heatmapChart.title" [colors]="heatmapChart.colors" [xaxis]="heatmapChart.xaxis"></apx-chart>
     <br>
 
 
