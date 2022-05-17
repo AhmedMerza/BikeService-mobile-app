@@ -15,7 +15,7 @@ import { ModalController } from '@ionic/angular'
 })
 export class RequestServicePage implements OnInit {
 
-  service = 'Major';
+  service = 'Major - 20BD';
   dateTime;
   issue;
   etc = '';
@@ -105,6 +105,7 @@ export class RequestServicePage implements OnInit {
       message: message,
       buttons: [{
         text: "OK", handler: () => { 
+          if (header.indexOf('Missing'))
           window.location.reload();
          }
       }]
