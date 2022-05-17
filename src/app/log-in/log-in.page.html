@@ -5,19 +5,25 @@
 </ion-header>
 
 <ion-content class="auth-form">
-  <form>
+  <form [formGroup]="loginForm"  (ngSubmit)="login(loginForm.value)">
     <ion-item lines="full">
       <ion-label position="floating">Email</ion-label>
-      <ion-input name="email" type="text" required [(ngModel)]="email"></ion-input>
+      <ion-input name="email" type="text" required formControlName="email"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="loginForm.controls['email'].hasError('required') && loginForm.controls['email'].touched">
+      <small><ion-label color="danger">Sorry, email is required!</ion-label></small>
     </ion-item>
     <ion-item lines="full">
       <ion-label position="floating">Password</ion-label>
-      <ion-input name="password" type="password" required [(ngModel)]="password"></ion-input>
+      <ion-input name="password" type="password" required formControlName="password"></ion-input>
     </ion-item>
-    <small ngDefaultControl name="error" style="margin-left: 20px; color: red;">{{error}}</small>
+    <ion-item *ngIf="loginForm.controls['password'].hasError('required') && loginForm.controls['password'].touched">
+      <small><ion-label color="danger">Sorry, password is required!</ion-label></small>
+    </ion-item>
+    <small ngDefaultControl name="error" style="margin-left: 20px; color: red;"><ion-input>{{error}}</ion-input></small>
     <ion-row>
       <ion-col>
-        <ion-button (click)="login()" style="margin: 25px 50px" type="submit" color="danger" expand="block">Log In</ion-button>
+        <ion-button style="margin: 25px 50px" type="submit" color="danger" expand="block">Log In</ion-button>
         <a routerLink="/forgot-password" class="already">Forgot Password?</a>
       </ion-col>
     </ion-row>

@@ -62,7 +62,7 @@ export class CartModalPage implements OnInit {
   prices: prices,
   totalPrice: money,
   state: 'On the way',
-  userID: this.walletServ.userID
+  userID: this.walletServ.userID, Date: Date()
 });
       await new Promise(resolve => setTimeout(resolve, 3000));
       this.walletServ.setWallet(this.walletServ.getWallet() - money);
