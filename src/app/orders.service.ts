@@ -14,6 +14,7 @@ export interface Order {
   totalPrice: number;
   state: string;
   userID: string;
+  Date: string;
 }
 
 
@@ -53,7 +54,7 @@ export class OrdersService {
         }
 
       addOrder(order: Order): Promise<DocumentReference> {
-              return this.ordersCollection.add({itemsID: order.itemsID, prices: order.prices, quantities: order.quantities, state: 'On the way', totalPrice: order.totalPrice, userID: order.userID }); 
+              return this.ordersCollection.add({itemsID: order.itemsID, prices: order.prices, quantities: order.quantities, state: 'On the way', totalPrice: order.totalPrice, userID: order.userID, Date: order.Date }); 
           }
       updateOrder(order: Order): Promise<void> {
             return this.ordersCollection.doc(order.id).update({state: order.state});
