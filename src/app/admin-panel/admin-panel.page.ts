@@ -375,45 +375,7 @@ export class AdminPanelPage implements OnInit {
     var day = d.getDate();		// Day		[dd]	(1 - 31)
     var year = d.getFullYear();	// Year		[yyyy]
 
-    switch (month) {
-      case 1:
-        this.dayOfCurrentMonth = 31;
-        break;
-      case 2:
-        this.dayOfCurrentMonth = 28;
-        break;
-      case 3:
-        this.dayOfCurrentMonth = 31;
-        break;
-      case 4:
-        this.dayOfCurrentMonth = 30;
-        break;
-      case 5:
-        this.dayOfCurrentMonth = 31;
-        break;
-      case 6:
-        this.dayOfCurrentMonth = 30;
-        break;
-      case 7:
-        this.dayOfCurrentMonth = 31;
-        break;
-      case 8:
-        this.dayOfCurrentMonth = 31;
-        break;
-      case 9:
-        this.dayOfCurrentMonth = 30;
-        break;
-      case 10:
-        this.dayOfCurrentMonth = 31;
-        break;
-      case 11:
-        this.dayOfCurrentMonth = 30;
-        break;
-      case 12:
-        this.dayOfCurrentMonth = 31;
-        break;
-
-    }
+    
 
   }
 
