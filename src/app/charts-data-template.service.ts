@@ -7,7 +7,105 @@ export class ChartsDataTemplateService {
 
   constructor() { }
 
-  public heatMapDataTemp = [{
+  public heatMapDataTempThisYear = [{
+    name: '12AM',
+    data: [0, 0, 0, 0, 0, 0, 0]
+  },
+    {
+      name: '1AM',
+      data: [0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      name: '2AM',
+      data: [0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      name: '3AM',
+      data: [0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      name: '4AM',
+      data: [0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      name: '5AM',
+      data: [0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      name: '6AM',
+      data: [0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      name: '7AM',
+      data: [0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      name: '8AM',
+      data: [0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      name: '9AM',
+      data: [0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      name: '10AM',
+      data: [0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      name: '11AM',
+      data: [0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      name: '12PM',
+      data: [0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      name: '1PM',
+      data: [0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      name: '2PM',
+      data: [0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      name: '3PM',
+      data: [0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      name: '4PM',
+      data: [0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      name: '5PM',
+      data: [0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      name: '6PM',
+      data: [0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      name: '7PM',
+      data: [0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      name: '8PM',
+      data: [0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      name: '9PM',
+      data: [0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      name: '10PM',
+      data: [0, 0, 0, 0, 0, 0, 0]
+    },
+    {
+      name: '11PM',
+      data: [0, 0, 0, 0, 0, 0, 0]
+    }
+  ];
+
+  public heatMapDataTempThisMonth = [{
     name: '12AM',
     data: [0, 0, 0, 0, 0, 0, 0]
   },

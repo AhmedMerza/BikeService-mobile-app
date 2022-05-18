@@ -42,6 +42,9 @@ export class AdminPanelPage implements OnInit {
   dataStore;
   public showStatsFor: 'thisMonth';
 
+  totalOrders = 0;
+  totalRevenue = 0;
+
 
 
   public thisYearOrders = this.dataTemp.aYearOrders;
@@ -52,16 +55,19 @@ export class AdminPanelPage implements OnInit {
   public heatmapChart: Partial<ChartOptions>;
   public revenueChart: Partial<ChartOptions>;
 
-  public totalOrders: number;
-  public totalAmount: number;
 
   public labels= [];
 
   public dataForOrdersChart: number[];
   public dataForRevenueChart: number[];
-  public dataForHeatMap = this.dataTemp.heatMapDataTemp;
+
+  public dataForHeatMapMonth = this.dataTemp.heatMapDataTempThisMonth;
+  public dataForHeatMapYear = this.dataTemp.heatMapDataTempThisYear;
 
   public periods = [{'name': 'This Month', 'value': 'thisMonth'}, {'name': 'This Year', 'value': 'thisYear'}];
+  public selectedPeriodName = "this month";
+
+  
 
 
 
@@ -108,7 +114,7 @@ export class AdminPanelPage implements OnInit {
 
       this.dataForOrdersChart = this.calOrdersForYear();
       this.dataForRevenueChart = this.calRevenueForYear();
-      this.dataForHeatMap = this.calHeatmapForYear();
+      this.heatMapData = this.calHeatmapForYear();
 
     }
     this.spackLine();
@@ -138,31 +144,39 @@ export class AdminPanelPage implements OnInit {
 
   calOrdersForMonth(m: number){
     let orders= [];
+    let sum = 0;
     let d = new Date();
     let year = d.getFullYear();
     if(m == 2){
       for(let i = 1; i < 30; i++){
         orders.push(this.calOrdersByDayOfMonth(i, m));
+        sum += this.calOrdersByDayOfMonth(i, m);
       }
     }
     else if(m == 4 || 6 || 9 || 11){
       for(let i = 1; i < 31; i++){
         orders.push(this.calOrdersByDayOfMonth(i, m));
+        sum += this.calOrdersByDayOfMonth(i, m);
       }
     }
     else{
       for(let i = 1; i < 32; i++){
         orders.push(this.calOrdersByDayOfMonth(i, m));
+        sum += this.calOrdersByDayOfMonth(i, m);
       }
     }
+    this.totalOrders = sum;
     return orders;
   }
 
   calOrdersForYear(){
     let revenue= [];
+    let sum = 0;
       for(let i = 1; i < 13; i++){
         revenue.push(this.calOrdersByMonth(i));
+        sum += this.calOrdersByMonth(i);
       }
+    this.totalOrders = sum;
     return revenue;
   }
 
@@ -199,31 +213,39 @@ export class AdminPanelPage implements OnInit {
   calRevenueForMonth(m: number){
     let revenue= [];
     let d = new Date();
+    let sum = 0;
     let year = d.getFullYear();
     if(m == 2){
       for(let i = 1; i < 30; i++){
-        revenue.push(this.calRevenueByDayOfMonth(i, m));
+        revenue.push(this.calRevenueByDayOfMonth(i, m).toFixed(2));
+        sum += this.calRevenueByDayOfMonth(i, m);
       }
     }
     else if(m == 4 || m == 6 || m == 9 || m == 11){
       for(let i = 1; i < 31; i++){
-        revenue.push(this.calRevenueByDayOfMonth(i, m));
+        revenue.push(this.calRevenueByDayOfMonth(i, m).toFixed(2));
+        sum += this.calRevenueByDayOfMonth(i, m);
       }
     }
     else{
       for(let i = 1; i < 32; i++){
-        revenue.push(this.calRevenueByDayOfMonth(i, m));
+        revenue.push(this.calRevenueByDayOfMonth(i, m).toFixed(2));
+        sum += this.calRevenueByDayOfMonth(i, m);
       }
     }
+    this.totalRevenue = sum;
     return revenue;
   }
 
   calRevenueForYear(){
     let revenue= [];
+    let sum = 0;
       for(let i = 1; i < 13; i++){
-        revenue.push(this.calRevenueByMonth(i));
+        revenue.push(this.calRevenueByMonth(i).toFixed(2));
+        sum += this.calRevenueByMonth(i);
       }
-   
+
+    this.totalRevenue = sum;
     return revenue;
   }
 
@@ -236,15 +258,31 @@ export class AdminPanelPage implements OnInit {
   }
 
   calHeatmapForMonth(m){
-    return this.dataTemp.heatMapDataTemp;
+    return this.dataTemp.heatMapDataTempThisMonth;
   }
 
   calHeatmapForYear(){
-    return this.dataTemp.heatMapDataTemp;
+    return this.dataTemp.heatMapDataTempThisYear;
+  }
+
+  getTotalOrders(){
+    return this.sum(this.dataForOrdersChart);
+  }
+
+  getTotalRevenue(){
+    return this.sum(this.dataForRevenueChart);
+  }
+
+  sum(x: number[]){
+    let sum = 0;
+    for (let i of x){
+      sum += i;
+    }
+    return Number(sum);
   }
 
   //heatmap
-  public heatMapData = this.dataTemp.heatMapDataTemp;
+  public heatMapData = this.dataTemp.heatMapDataTempThisMonth;
 
   constructor(public orderServ: OrdersService, public dataTemp: ChartsDataTemplateService) {
     this.spackLine();
@@ -271,7 +309,7 @@ export class AdminPanelPage implements OnInit {
         curve: 'straight'
       },
       title: {
-        text: 'Amount of revenue this year',
+        text: 'Amount of revenue',
         align: 'left'
       },
       grid: {
@@ -282,8 +320,12 @@ export class AdminPanelPage implements OnInit {
       },
       xaxis: {
         categories: this.labels,
-      }
+      },
+      
+          
+    
     };
+
 
     //['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
@@ -299,7 +341,7 @@ export class AdminPanelPage implements OnInit {
       },
       colors: ["#008FFB"],
       title: {
-        text: 'HeatMap Chart (Single color)'
+        text: 'Orders by hour and day of week'
       },
       xaxis: {
         categories: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fi', 'Sa'],
@@ -349,7 +391,7 @@ export class AdminPanelPage implements OnInit {
         curve: 'straight'
       },
       title: {
-        text: 'Number of orders this year',
+        text: 'Number of orders',
         align: 'left'
       },
       grid: {
@@ -365,13 +407,15 @@ export class AdminPanelPage implements OnInit {
 
   };
 
+  
+
   ngOnInit() {
 
 
     const d = new Date();
     var m = d.getMonth() + 1;	// Month	[mm]	(1 - 12)
-    var day1 = d.getDate();		// Day		[dd]	(1 - 31)
-    var year1 = d.getFullYear();	// Year		[yyyy]
+    var tday = d.getDate();		// Day		[dd]	(1 - 31)
+    var y = d.getFullYear();	// Year		[yyyy]
 
 
 
@@ -389,9 +433,11 @@ export class AdminPanelPage implements OnInit {
 
         let dayWeekName = order.Date.toDate().getDay();
 
+        this.dataForHeatMapYear[hour].data[dayWeekName] += 1;
 
-
-        this.heatMapData[hour].data[dayWeekName] += 1;
+        if(year == y && month == m){
+          this.dataForHeatMapMonth[hour].data[dayWeekName] += 1;
+        }
         
         
       }
@@ -447,6 +493,9 @@ export class AdminPanelPage implements OnInit {
       this.dataForOrdersChart = this.calOrdersForMonth(m);
       this.dataForRevenueChart = this.calRevenueForMonth(m);
       this.heatMapData = this.calHeatmapForMonth(m);
+
+
+      
 
       
 
