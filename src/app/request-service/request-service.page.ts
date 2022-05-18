@@ -32,7 +32,7 @@ export class RequestServicePage implements OnInit {
       var email;
       Storage.get({key: 'email'}).then((res) => {
         email = res.value;
-         var user = users.filter(use => use.email == email)[0]
+         var user = users.filter(use => use.email.toLowerCase() == email)[0]
          this.userID = user.id;
         if (user == null)
           alert("Unknown user")})

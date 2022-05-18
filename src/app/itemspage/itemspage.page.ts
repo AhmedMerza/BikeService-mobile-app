@@ -1,9 +1,8 @@
 import { DataService } from '../data.service'
 
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { AfterViewInit, QueryList, ViewChildren } from '@angular/core';
 import { IonItem, Gesture, GestureController } from '@ionic/angular';
-
 
 import { CartService } from './../cart.service';
 import { ModalController } from '@ionic/angular';
@@ -32,10 +31,12 @@ export class ItemspagePage implements OnInit, AfterViewInit {
   products = [];
   cartItemCount: BehaviorSubject<number>;
   title: string;
+  x = 0;
+  y = 0;
  
   // @ViewChild('cart', {static: false, read: ElementRef})fab: ElementRef;
 
-  constructor(public dataServ: DataService, private cartService: CartService, private modalCtrl: ModalController, public animationCtrl: AnimationController, public walletServ: WalletService, private activeRoute: ActivatedRoute, private gestureCtrl: GestureController) {
+  constructor(public dataServ: DataService, private cartService: CartService, private modalCtrl: ModalController, public animationCtrl: AnimationController, public walletServ: WalletService, private activeRoute: ActivatedRoute, private gestureCtrl: GestureController, private changeDetectorRef: ChangeDetectorRef) {
     cartService.i = activeRoute.snapshot.paramMap.get('i')
     if (cartService.i == '0') {
       this.title = 'Items page'
@@ -54,11 +55,9 @@ export class ItemspagePage implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.updateGestures();
-    console.log(this.cartBtn.nativeElement)
   }
 
   updateGestures() {
-    console.log(this.cartBtn);
     const drag = this.gestureCtrl.create({
   el: this.cartBtn.nativeElement,
   threshold: 1,
@@ -67,11 +66,19 @@ export class ItemspagePage implements OnInit, AfterViewInit {
 
   },
   onMove: ev => {
-    this.cartBtn.nativeElement.style.tranform = `translate(${ev.deltaX}px, ${ev.deltaY}px)`;
-    console.log(ev.deltaX)
+    var x = this.x + ev.deltaX
+    var y = this.y + ev.deltaY
+      
+ 
+    this.cartBtn.nativeElement.style.transform = `translate(${x}px, ${y}px)`;
+    this.changeDetectorRef.detectChanges();
   },
   onEnd: ev => {
-
+    // if (this.x + ev.deltaX < 30  && this.x + ev.deltaX > -330) {
+      this.x += ev.deltaX
+    // } else if(ev.deltaX + this.x > 30) this.x = 30;
+    // else if (ev.deltaX + this.x < -330) this.x = -330;
+    this.y += ev.deltaY
   }
 });
   drag.enable();
@@ -80,7 +87,6 @@ export class ItemspagePage implements OnInit, AfterViewInit {
 
 
   ngOnInit() {
-    // this.products = this.cartService.getProducts();
     this.cart = this.cartService.getCart();
     this.cartItemCount = this.cartService.getCartItemCount();
   }

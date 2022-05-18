@@ -16,7 +16,7 @@ export class WalletService  {
   constructor(public userServ: UserService) {
     Storage.get({key: 'email'}).then((res) => {this.email = res.value; 
       this.userServ.getUsers().subscribe(users => {
-        var user = users.filter(use => use.email == this.email)[0]
+        var user = users.filter(use => use.email.toLowerCase() == this.email)[0]
         if (user == null) return;
           this.loading = false;
           this.wallet = user.wallet;

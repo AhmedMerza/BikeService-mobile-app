@@ -24,8 +24,8 @@
   </ion-card> -->
 
 
-  <ion-fab vertical="top" horizontal="end" slot="fixed" style="margin-top: 40px">
-    <ion-fab-button (click)="openCart()" #cart>
+  <ion-fab  #cart vertical="top" horizontal="end" slot="fixed" style="margin-top: 40px">
+    <ion-fab-button (click)="openCart()" >
       <div class="cart-length">{{ cartItemCount | async }}</div>
       <ion-icon name="cart" class="cart-icon"></ion-icon>
     </ion-fab-button>
