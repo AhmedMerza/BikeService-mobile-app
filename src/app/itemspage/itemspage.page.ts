@@ -1,6 +1,10 @@
 import { DataService } from '../data.service'
 
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { AfterViewInit, QueryList, ViewChildren } from '@angular/core';
+import { IonItem, Gesture, GestureController } from '@ionic/angular';
+
+
 import { CartService } from './../cart.service';
 import { ModalController } from '@ionic/angular';
 import { CartModalPage } from '../cart-modal/cart-modal.page';
@@ -19,18 +23,19 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './itemspage.page.html',
   styleUrls: ['./itemspage.page.scss'],
 })
-export class ItemspagePage implements OnInit {
+export class ItemspagePage implements OnInit, AfterViewInit {
 
   // searchedItems;
+  @ViewChild('cart', { read: ElementRef }) cartBtn: ElementRef;
 
   cart = [];
   products = [];
   cartItemCount: BehaviorSubject<number>;
   title: string;
  
-  @ViewChild('cart', {static: false, read: ElementRef})fab: ElementRef;
+  // @ViewChild('cart', {static: false, read: ElementRef})fab: ElementRef;
 
-  constructor(public dataServ: DataService, private cartService: CartService, private modalCtrl: ModalController, public animationCtrl: AnimationController, public walletServ: WalletService, private activeRoute: ActivatedRoute) {
+  constructor(public dataServ: DataService, private cartService: CartService, private modalCtrl: ModalController, public animationCtrl: AnimationController, public walletServ: WalletService, private activeRoute: ActivatedRoute, private gestureCtrl: GestureController) {
     cartService.i = activeRoute.snapshot.paramMap.get('i')
     if (cartService.i == '0') {
       this.title = 'Items page'
@@ -45,6 +50,32 @@ export class ItemspagePage implements OnInit {
           ));
     }
     this.expandVal();
+  }
+
+  ngAfterViewInit(): void {
+    this.updateGestures();
+    console.log(this.cartBtn.nativeElement)
+  }
+
+  updateGestures() {
+    console.log(this.cartBtn);
+    const drag = this.gestureCtrl.create({
+  el: this.cartBtn.nativeElement,
+  threshold: 1,
+  gestureName: 'drag', 
+  onStart: ev=> {
+
+  },
+  onMove: ev => {
+    this.cartBtn.nativeElement.style.tranform = `translate(${ev.deltaX}px, ${ev.deltaY}px)`;
+    console.log(ev.deltaX)
+  },
+  onEnd: ev => {
+
+  }
+});
+  drag.enable();
+    
   }
 
 
