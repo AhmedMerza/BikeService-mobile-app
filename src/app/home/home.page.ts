@@ -22,7 +22,7 @@ export class HomePage {
     Storage.get({key: 'email'}).then((res=> {
       email = res.value;
       this.userServ.getUsers().subscribe(users => {
-        var user = users.filter(use => use.email == email)[0]
+        var user = users.filter(use => use.email.toLowerCase() == email)[0]
         if (user == null) return;
           this.loading = false;
           this.type = user.type;

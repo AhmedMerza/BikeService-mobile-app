@@ -10,14 +10,14 @@
       <ion-label position="floating">Email</ion-label>
       <ion-input name="email" type="text" required formControlName="email"></ion-input>
     </ion-item>
-    <ion-item *ngIf="loginForm.controls['email'].hasError('required') && loginForm.controls['email'].touched">
+    <ion-item lines="none" *ngIf="loginForm.controls['email'].hasError('required') && loginForm.controls['email'].touched">
       <small><ion-label color="danger">Sorry, email is required!</ion-label></small>
     </ion-item>
     <ion-item lines="full">
       <ion-label position="floating">Password</ion-label>
       <ion-input name="password" type="password" required formControlName="password"></ion-input>
     </ion-item>
-    <ion-item *ngIf="loginForm.controls['password'].hasError('required') && loginForm.controls['password'].touched">
+    <ion-item lines="none" *ngIf="loginForm.controls['password'].hasError('required') && loginForm.controls['password'].touched">
       <small><ion-label color="danger">Sorry, password is required!</ion-label></small>
     </ion-item>
     <small ngDefaultControl name="error" style="margin-left: 20px; color: red;"><ion-input>{{error}}</ion-input></small>

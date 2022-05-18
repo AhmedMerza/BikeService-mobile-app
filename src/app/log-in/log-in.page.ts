@@ -30,13 +30,12 @@ export class LogInPage implements OnInit {
 
 
   login (val) {
-    Storage.clear();
     if (val.email && val.password) {
       this.FBAuth.signInWithEmailAndPassword(val.email, val.password).then(
         () => { this.error = ''; 
         this.password = ''; 
         this.userServ.getUsers().subscribe(users => {
-          var user = users.filter(use => use.email == val.email)[0]
+          var user = users.filter(use => use.email.toLowerCase() == val.email.toLowerCase())[0]
           if (user == null) return;
             Storage.set({key:"email", value: val.email});
         })
