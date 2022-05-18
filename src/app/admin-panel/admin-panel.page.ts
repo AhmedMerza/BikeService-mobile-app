@@ -417,9 +417,6 @@ export class AdminPanelPage implements OnInit {
     var tday = d.getDate();		// Day		[dd]	(1 - 31)
     var y = d.getFullYear();	// Year		[yyyy]
 
-<<<<<<< HEAD
-    
-=======
 
 
     this.orderServ.getOrders().subscribe((orders) => {
@@ -507,7 +504,6 @@ export class AdminPanelPage implements OnInit {
     })
     
 
->>>>>>> f0b34e3fe243a74a19b742051f6a61d479cf81d2
 
   }
 
