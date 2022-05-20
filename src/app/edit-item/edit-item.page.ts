@@ -11,12 +11,12 @@ import { AlertController } from '@ionic/angular'
 })
 export class EditItemPage implements OnInit {
 
-  name;
-  type;
-  price;
-  pic;
-  discount;
-  info;
+  name: string;
+  type: string;
+  price: number;
+  pic: string;
+  discount: number;
+  info: string;
 
   constructor(public cartService: CartService, public modalCtrl: ModalController, public alertCtrl: AlertController) {
     if (cartService.id == null) return;
@@ -58,7 +58,7 @@ export class EditItemPage implements OnInit {
   } else this.alert('Please fill all the inputs!')
     }
 
-  async alert(header) {
+  async alert(header: string) {
     var alertNot = await this.alertCtrl.create({header: header})
     alertNot.present();
     }
@@ -77,7 +77,7 @@ export class EditItemPage implements OnInit {
 
     }
     else  {
-      if (this.discount >= 0 && this.discount <1)
+      if (this.discount < 0 ||  this.discount >= 1)
         header = 'Disount should be between 0 and 1 exclusive'
       else if (this.price <=0)  
         header = 'Price should be greater than 0'
