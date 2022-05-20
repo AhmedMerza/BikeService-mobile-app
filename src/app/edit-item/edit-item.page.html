@@ -11,8 +11,7 @@
     <ion-input [(ngModel)]="name"></ion-input>
   </ion-item>
   <ion-item>
-    <!-- <ion-label>Type:</ion-label>
-    <ion-input [(ngModel)]="type"></ion-input> -->
+     <ion-label>Type:</ion-label>
     <ion-select [(ngModel)]="type">
     <ion-select-option value="Bike">Bike</ion-select-option>
     <ion-select-option value="Saddle">Saddle</ion-select-option>
@@ -26,11 +25,11 @@
   </ion-item>
   <ion-item>
     <ion-label>Price:</ion-label>
-    <ion-input [(ngModel)]="price"></ion-input>
+    <ion-input type="number" [(ngModel)]="price"></ion-input>
   </ion-item>
   <ion-item>
     <ion-label>Discount (0-1):</ion-label>
-    <ion-input [(ngModel)]="discount"></ion-input>
+    <ion-input type="number" [(ngModel)]="discount"></ion-input>
   </ion-item>
   <ion-item>
     <ion-label>Pic:</ion-label>
