@@ -40,7 +40,7 @@ export class LogInPage implements OnInit {
             Storage.set({key:"email", value: val.email});
         })
         this.router.navigateByUrl('/home'); }
-      ).catch( () => this.error = 'wrong credentials');
+      ).catch( () => this.error = 'Wrong credentials');
     }
     else {
       this.alert("Inputs validation", "You have to fill email and password");

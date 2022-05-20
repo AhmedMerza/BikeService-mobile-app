@@ -17,7 +17,7 @@ export class WalletPage implements OnInit {
   }
 
   async add()  {
-    if (isNaN(this.money) || this.money <= 1) {
+    if (isNaN(this.money) || this.money <= 0) {
       this.alert('Adding balance to your account', "Balance should be greater than zero")
       return;
     }

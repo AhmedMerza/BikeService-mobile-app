@@ -11,8 +11,14 @@
     <ion-input [(ngModel)]="name"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-label>Type:</ion-label>
-    <ion-input [(ngModel)]="type"></ion-input>
+    <!-- <ion-label>Type:</ion-label>
+    <ion-input [(ngModel)]="type"></ion-input> -->
+    <ion-select [(ngModel)]="type">
+    <ion-select-option value="Bike">Bike</ion-select-option>
+    <ion-select-option value="Saddle">Saddle</ion-select-option>
+    <ion-select-option value="Tire">Tire</ion-select-option>
+    <ion-select-option value="Accessories">Accessories</ion-select-option>
+    </ion-select>
   </ion-item>
   <ion-item>
     <ion-label>Info:</ion-label>
