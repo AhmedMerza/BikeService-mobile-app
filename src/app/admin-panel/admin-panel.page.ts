@@ -423,15 +423,16 @@ export class AdminPanelPage implements OnInit {
       this.dataStore = orders
       console.log(this.dataStore)
       for (let order of this.dataStore) {
-        let hour = order.Date.toDate().getHours();
-        let day = order.Date.toDate().getDate();
-        let month = order.Date.toDate().getMonth() + 1;
-        let year = order.Date.toDate().getFullYear();
+        let date = new Date(order.Date);
+        let hour = date.getHours();
+        let day = date.getDate();
+        let month = date.getMonth() + 1;
+        let year = date.getFullYear();
         
         this.thisYearOrders[month][day][hour] +=1;
         this.thisYearReveue[month][day][hour] += order.totalPrice;
 
-        let dayWeekName = order.Date.toDate().getDay();
+        let dayWeekName = date.getDay();
 
         this.dataForHeatMapYear[hour].data[dayWeekName] += 1;
 
