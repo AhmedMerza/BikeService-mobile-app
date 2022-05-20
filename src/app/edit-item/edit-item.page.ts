@@ -65,7 +65,7 @@ export class EditItemPage implements OnInit {
 
     add() {
       var header;
-      if (this.discount && this.price && this.info && this.name && this.type && this.pic) {
+      if ( this.discount >= 0 && this.discount <1 && this.price && this.info && this.name && this.type && this.pic) {
       if ( this.discount >= 0 && this.discount <1 && this.price > 0)  {
         this.cartService.addProduct({
         name: this.name, type: this.type, price: this.price, info: this.info, discount: this.discount, id: this.cartService.id, pic: this.pic
@@ -78,7 +78,7 @@ export class EditItemPage implements OnInit {
     }
     else  {
       if (this.discount < 0 ||  this.discount >= 1)
-        header = 'Disount should be between 0 and 1 exclusive'
+        header = 'Discount should be between 0 and 1 exclusive'
       else if (this.price <=0)  
         header = 'Price should be greater than 0'
       this.alert(header)

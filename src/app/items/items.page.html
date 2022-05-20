@@ -23,7 +23,11 @@
             </ion-label>
       </ion-card-header>
       <ion-card-content>
-        <ion-label *ngIf="item.discount != 0">Price after discount: {{(1-item.discount) * item.price}} BHD</ion-label>
+        <ion-label>{{item.info}}</ion-label>
+        <div *ngIf="item.discount != 0">
+          <br>
+          <ion-label color="danger">Price after discount: {{(1-item.discount) * item.price}} BHD</ion-label>
+        </div>
       </ion-card-content>
     </ion-card>
   </ion-list>
