@@ -12,12 +12,16 @@
     <ion-list>
       <ion-menu-toggle auto-hide="false">
         <ion-item button routerLink="/home">
-          <ion-icon name="home"></ion-icon>
+          <ion-icon name="home-outline"></ion-icon>
           <ion-label> Home </ion-label>
         </ion-item>
         <ion-item button routerLink="/wallet" *ngIf="type=='user'">
-          <ion-icon name="wallet"></ion-icon>
+          <ion-icon name="wallet-outline"></ion-icon>
           <ion-label> Wallet </ion-label>
+        </ion-item>
+        <ion-item button routerLink="/contactus" *ngIf="type=='user'">
+          <ion-icon name="call-outline"></ion-icon>
+          <ion-label> Contact us </ion-label>
         </ion-item>
         <ion-item button (click)="logout()">
           <ion-icon name="log-out-outline"></ion-icon>
@@ -38,10 +42,13 @@
           </ion-button>
         </ion-menu-toggle>
       </ion-buttons>
-      <ion-title>Home</ion-title>
+      <ion-title><ion-icon name="home-outline"></ion-icon></ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-content>
+    <img src="..\assets\img\homebike.png"  style="width:60%;height:30%; display: block; margin-left: auto; margin-right: auto;"/> <br>
+    <h2 style="text-align: center;">
+      WELCOME DEAR <b style="text-transform:uppercase;">{{type}}</b></h2>
     <br><br><br>
     <ion-grid>
       <ion-row class="ion-justify-content-center">
@@ -75,7 +82,7 @@
         </ion-col>
         <ion-col size="5" *ngIf="type=='user'">
           <ion-button expand="clear" routerLink="/selffix"> 
-          <ion-icon name="construct-outline"></ion-icon>  &nbsp; SELF FIX
+            <ion-icon name="hammer-outline"></ion-icon> &nbsp; SELF FIX
         </ion-button>
         </ion-col>
       </ion-row>
@@ -86,8 +93,10 @@
             <ion-icon name="construct-outline"></ion-icon> &nbsp; DASHBOARD
           </ion-button>
         </ion-col>
-        <ion-col size="5">
-          <ion-button expand="block"> </ion-button>
+        <ion-col size="6" *ngIf="type=='user'">
+          <ion-button expand="clear" routerLink="/contactus">
+            <ion-icon name="call-outline"></ion-icon> &nbsp; CONTACT US
+          </ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>

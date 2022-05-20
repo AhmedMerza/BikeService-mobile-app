@@ -67,6 +67,10 @@ const routes: Routes = [
     path: 'selffix',
     loadChildren: () => import('./selffix/selffix.module').then( m => m.SelffixPageModule)
   },
+  {
+    path: 'contactus',
+    loadChildren: () => import('./contactus/contactus.module').then( m => m.ContactusPageModule)
+  },
 
 
 
