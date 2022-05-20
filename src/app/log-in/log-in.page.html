@@ -20,7 +20,7 @@
     <ion-item lines="none" *ngIf="loginForm.controls['password'].hasError('required') && loginForm.controls['password'].touched">
       <small><ion-label color="danger">Sorry, password is required!</ion-label></small>
     </ion-item>
-    <small ngDefaultControl name="error" style="margin-left: 20px; color: red;"><ion-input>{{error}}</ion-input></small>
+    <small ngDefaultControl name="error" style="margin-left: 20px; color: red;"><ion-label>{{error}}</ion-label></small>
     <ion-row>
       <ion-col>
         <ion-button style="margin: 25px 50px" type="submit" color="danger" expand="block">Log In</ion-button>
