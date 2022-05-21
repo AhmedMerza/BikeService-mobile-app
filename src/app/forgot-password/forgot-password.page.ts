@@ -10,6 +10,7 @@ import {UserService, User} from '../user.service';
 export class ForgotPasswordPage implements OnInit {
 
   email;
+  err;
 
   constructor(public FBAuth: AngularFireAuth, public userServ: UserService) { }
 
@@ -18,8 +19,7 @@ export class ForgotPasswordPage implements OnInit {
 
   forgetPassword () {;
     if (this.email == null) return;;
-    console.log('Forgot Password')
-    this.FBAuth.sendPasswordResetEmail(this.email).then(() => {alert("An email has been sent to your account!")})
+    this.FBAuth.sendPasswordResetEmail(this.email).then(() => {alert("An email has been sent to your account!")}).catch(() => {this.err = "Wrong email"})
   }
 
 }
