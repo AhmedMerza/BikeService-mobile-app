@@ -288,7 +288,10 @@ export class AdminPanelPage implements OnInit {
   constructor(public orderServ: OrdersService, public dataTemp: ChartsDataTemplateService, private serviceServ: ServiceService) {
     this.spackLine();
     serviceServ.getServices().subscribe((services)=> {
-      this.servicesSum = services.length;
+      var servs = services.filter((service)=> {
+        return service.state != 'Done';
+      })
+      this.servicesSum = servs.length;
     })
   }
 
