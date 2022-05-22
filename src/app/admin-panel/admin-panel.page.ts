@@ -3,6 +3,7 @@ import { ApexChart, ApexAnnotations, ApexDataLabels, ApexAxisChartSeries, ApexNo
 import { map } from 'rxjs/operators';
 import { OrdersService } from '../orders.service';
 import { ChartsDataTemplateService } from '../charts-data-template.service';
+import { ServiceService } from '../service.service';
 
 export type ChartOptions = {
   chart: ApexChart;
