@@ -45,6 +45,7 @@ export class AdminPanelPage implements OnInit {
 
   totalOrders = 0;
   totalRevenue = 0;
+  servicesSum: number;
 
 
 
@@ -105,7 +106,6 @@ export class AdminPanelPage implements OnInit {
           labels.push(String(i))
         }
       }
-      console.log(labels,m);
       this.labels = labels;
       this.dataForOrdersChart = this.calOrdersForMonth(m);
       this.dataForRevenueChart = this.calRevenueForMonth(m);
@@ -285,8 +285,11 @@ export class AdminPanelPage implements OnInit {
   //heatmap
   public heatMapData = this.dataTemp.heatMapDataTempThisMonth;
 
-  constructor(public orderServ: OrdersService, public dataTemp: ChartsDataTemplateService) {
+  constructor(public orderServ: OrdersService, public dataTemp: ChartsDataTemplateService, private serviceServ: ServiceService) {
     this.spackLine();
+    serviceServ.getServices().subscribe((services)=> {
+      this.servicesSum = services.length;
+    })
   }
 
   spackLine() {
@@ -422,7 +425,6 @@ export class AdminPanelPage implements OnInit {
 
     this.orderServ.getOrders().subscribe((orders) => {
       this.dataStore = orders
-      console.log(this.dataStore)
       for (let order of this.dataStore) {
         let date = new Date(order.Date);
         let hour = date.getHours();
@@ -474,7 +476,6 @@ export class AdminPanelPage implements OnInit {
 
       ];
 
-      console.log(this.heatMapData[23]);
 
       if(m == 2){
         for(let i = 1; i < 30; i++){

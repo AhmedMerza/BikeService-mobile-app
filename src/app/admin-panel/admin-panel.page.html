@@ -16,7 +16,7 @@
           <div>Ongoing services</div>
         </ion-col>
         <ion-col size="3">
-          <div>8</div>
+          <div><ion-label>{{servicesSum}}</ion-label></div>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -35,7 +35,7 @@
     <ion-grid class="">
       <ion-row>
         <ion-col class="box1" size="6">Total Orders <br> <span style="font-size: xx-large;">{{totalOrders}}</span></ion-col>
-        <ion-col class="box2" size="6">Total Revenue <br> <span style="font-size: xx-large;">BD{{totalRevenue}}</span></ion-col>
+        <ion-col class="box2" size="6">Total Revenue <br> <span style="font-size: xx-large;">{{totalRevenue | number: '0.3'}}BD</span></ion-col>
       </ion-row>
     </ion-grid>
 
