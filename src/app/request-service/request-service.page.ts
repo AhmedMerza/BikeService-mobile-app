@@ -21,7 +21,7 @@ export class RequestServicePage implements OnInit {
   etc = '';
   progressBar = 0;
   type;
-  pickup = false;
+  pickup = "pickUp";
   lines = 'inset';
   comments = ""
   location;
@@ -56,9 +56,7 @@ export class RequestServicePage implements OnInit {
       this.progressBar += 0.25;
     if (this.location != null)
     this.progressBar += 0.25;
-    if (this.pickup == false)
-      this.progressBar += 0.25;
-    else this.progressBar += 0.25;
+    if (this.dateTime != null) this.progressBar += 0.25;
   }
 
   etcInput() {
@@ -75,7 +73,7 @@ export class RequestServicePage implements OnInit {
   async pay() {
     let header = "You request has been submitted";
     let message = "";
-    if (this.type != null && this.issue != null && this.location != null) {
+    if (this.type != null && this.issue != null && this.location != null && this.dateTime != null) {
       if (this.etc == 'Etc') {
 
         if (this.etcInput()) {
@@ -83,8 +81,6 @@ export class RequestServicePage implements OnInit {
           message = "Please fill all the inputs";
         }
       }
-      if (this.pickup == false)
-        this.dateTime = ""
 
         var bikeParts: string [] = []; 
     for (let part of this.dataServ.bikeParts) 
@@ -92,7 +88,7 @@ export class RequestServicePage implements OnInit {
         bikeParts.push(part.id.toString());
     var service: Service = {
       bikeType: this.type, pickUpDateTime: this.dateTime, comments: this.comments, issues: this.issue, location: this.location, rate: 'Not decided yet', serviceType: this.service, userID: this.userID,
-      state: 'Processing', bikeParts: bikeParts
+      state: 'Processing', bikeParts: bikeParts, pickUpDrop: this.pickup
     }
     this.serviceServ.addService(service);
 

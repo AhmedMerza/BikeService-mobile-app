@@ -18,6 +18,7 @@ export interface Service {
   state: string;
   userID: string;
   bikeParts: string[];
+  pickUpDrop: string;
 }
 
 @Injectable({
@@ -57,10 +58,10 @@ export class ServiceService {
         }
 
       addService(service: Service): Promise<DocumentReference> {
-              return this.serviceCollection.add({bikeType: service.bikeType, comments: service.comments, issues: service.issues, location: service.location, pickUpDateTime: service.pickUpDateTime, rate: service.rate, serviceType: service.serviceType, state: service.state, userID: service.userID, bikeParts: service.bikeParts}); 
+              return this.serviceCollection.add({bikeType: service.bikeType, comments: service.comments, issues: service.issues, location: service.location, pickUpDateTime: service.pickUpDateTime, rate: service.rate, serviceType: service.serviceType, state: service.state, userID: service.userID, bikeParts: service.bikeParts, pickUpDrop: service.pickUpDrop}); 
           }
       updateService(service: Service): Promise<void> {
-            return this.serviceCollection.doc(service.id).update({ rate: service.rate, state: service.state});
+            return this.serviceCollection.doc(service.id).update({ rate: service.rate, state: service.state, pickUpDrop: service.pickUpDrop});
           }
          
           deleteService(id: string): Promise<void> {

@@ -28,7 +28,8 @@
           </ion-select>
         </ion-item>
         <ion-label>Service type: {{service.serviceType}}</ion-label> <br>
-        <ion-label *ngIf="service.pickUpDateTime != ''">Date and Time: {{service.pickUpDateTime | date: 'short' }}</ion-label>
+        <ion-label style="text-transform: uppercase;">{{service.pickUpDrop}} Date and Time: {{service.pickUpDateTime | date: 'short' }}</ion-label>
+   
 
         <br>
         <br>
