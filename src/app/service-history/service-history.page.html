@@ -20,7 +20,7 @@
       <ion-label>Location: {{service.location}}</ion-label> <br>
       <ion-label>Status: {{service.state}}</ion-label> <br>
       <ion-label>Service type: {{service.serviceType}}</ion-label> <br>
-      <ion-label *ngIf="service.pickUpDateTime != ''">Date and Time: {{service.pickUpDateTime | date: 'short' }}</ion-label>
+      <ion-label style="text-transform: uppercase;">{{service.pickUpDrop}} Date and Time: {{service.pickUpDateTime | date: 'short' }}</ion-label>
    
       <div *ngIf="service.state.toLowerCase() == 'rate time'">
         <div style="display: flex; justify-content: space-around;">

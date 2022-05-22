@@ -58,9 +58,12 @@
   </ion-item>
 
   <ion-item>
-    <ion-checkbox [(ngModel)]="pickup"></ion-checkbox> &nbsp;
-    <ion-label>Pickup and drop time</ion-label>
-    <ion-button fill="clear" id="open-modal" disabled="{{!pickup}}">
+    <ion-label>Pickup or drop time</ion-label>
+    <ion-select [(ngModel)]="pickup">
+      <ion-select-option value="pickUp">Pickup</ion-select-option>
+      <ion-select-option value="drop">Drop</ion-select-option>
+    </ion-select>
+    <ion-button fill="clear" id="open-modal">
       <ion-icon icon="calendar"></ion-icon>
     </ion-button>
     <ion-modal trigger="open-modal">

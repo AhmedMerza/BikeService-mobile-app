@@ -54,7 +54,7 @@ export class RegisterPage implements OnInit {
             wallet: 0
   })
           this.router.navigateByUrl('/log-in');
-        }).then((res)=>console.log(res));
+        })
       }
     
       else this.error = "Passwords don't match";
