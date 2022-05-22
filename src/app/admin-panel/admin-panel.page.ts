@@ -27,10 +27,6 @@ export type ChartOptions = {
 }
 
 
-
-
-
-
 @Component({
   selector: 'app-admin-panel',
   templateUrl: './admin-panel.page.html',
@@ -39,16 +35,16 @@ export type ChartOptions = {
 
 export class AdminPanelPage implements OnInit {
 
+  constructor(public orderServ: OrdersService, public dataServ: ChartsDataTemplateService) {
+    this.spackLine();
+  }
+
+
   dataStore;
-  public showStatsFor: 'thisMonth';
-
-  totalOrders = 0;
-  totalRevenue = 0;
-
-
-
-  public thisYearOrders = this.dataTemp.aYearOrders;
-  public thisYearReveue = this.dataTemp.aYearRevenue;
+  public showStatsFor= 'thisMonth';
+  public periods = [{'name': 'This Month', 'value': 'thisMonth'}, {'name': 'This Year', 'value': 'thisYear'}];
+  public selectedPeriodName = "this month";
+  public period: string = this.dataServ.formatPeriod(this.showStatsFor);
 
   public numOfOrders: Partial<ChartOptions>;
   public donutChart: Partial<ChartOptions>;
@@ -56,37 +52,13 @@ export class AdminPanelPage implements OnInit {
   public revenueChart: Partial<ChartOptions>;
 
 
-  public labels= [];
-
-  public dataForOrdersChart: number[];
-  public dataForRevenueChart: number[];
-
-  public dataForHeatMapMonth = this.dataTemp.heatMapDataTempThisMonth;
-  public dataForHeatMapYear = this.dataTemp.heatMapDataTempThisYear;
-
-  public periods = [{'name': 'This Month', 'value': 'thisMonth'}, {'name': 'This Year', 'value': 'thisYear'}];
-  public selectedPeriodName = "this month";
+  
+  public dataForOrdersChart;
+  public dataForRevenueChart;
+  public heatMapData;
+  public labels;
 
   
-
-
-
-  public dayOfCurrentMonth: number;
-
-  // each index represent a day, iterate through orders and add 1 to the value of the corresponding index
-  // The array must be defined with 0 values and the length must be based on number of days in current month
-  public ordersInMonth: number[];
-
-  // each index represent a month, iterate through orders and add 1 to the value of the corresponding index
-  public ordersInYear: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-
- 
-  //heatmap
-  public heatMapData = this.dataTemp.heatMapDataTempThisMonth;
-
-  constructor(public orderServ: OrdersService, public dataTemp: ChartsDataTemplateService) {
-    this.spackLine();
-  }
 
   spackLine() {
 
@@ -207,105 +179,21 @@ export class AdminPanelPage implements OnInit {
 
   };
 
+  async x(){
+        this.dataServ.getData()
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        this.dataForOrdersChart = this.dataServ.NumberOfOrdersData(this.period);
+        this.dataForRevenueChart = this.dataServ.AmountOfRevenueData(this.period);
+        this.heatMapData = this.dataServ.getHeatmapData(this.period);
+        this.labels = this.dataServ.getLabels(this.period);
+  }
+
   
 
   ngOnInit() {
-
-
-    const d = new Date();
-    var m = d.getMonth() + 1;	// Month	[mm]	(1 - 12)
-    var tday = d.getDate();		// Day		[dd]	(1 - 31)
-    var y = d.getFullYear();	// Year		[yyyy]
-
-
-
-    this.orderServ.getOrders().subscribe((orders) => {
-      this.dataStore = orders
-      console.log(this.dataStore)
-      for (let order of this.dataStore) {
-        let date = new Date(order.Date);
-        let hour = date.getHours();
-        let day = date.getDate();
-        let month = date.getMonth() + 1;
-        let year = date.getFullYear();
-        
-        this.thisYearOrders[month][day][hour] +=1;
-        this.thisYearReveue[month][day][hour] += order.totalPrice;
-
-        let dayWeekName = date.getDay();
-
-        this.dataForHeatMapYear[hour].data[dayWeekName] += 1;
-
-        if(year == y && month == m){
-          this.dataForHeatMapMonth[hour].data[dayWeekName] += 1;
-        }
-        
-        
-      }
-      this.dataForOrdersChart=[
-      this.calOrdersByMonth(1),
-      this.calOrdersByMonth(2),
-      this.calOrdersByMonth(3),
-      this.calOrdersByMonth(4), 
-      this.calOrdersByMonth(5),
-      this.calOrdersByMonth(6), 
-      this.calOrdersByMonth(7),
-      this.calOrdersByMonth(8), 
-      this.calOrdersByMonth(9),
-      this.calOrdersByMonth(10),
-      this.calOrdersByMonth(11),
-      this.calOrdersByMonth(12),
-      ];
-
-      this.dataForRevenueChart = [
-        this.calRevenueByMonth(1),
-        this.calRevenueByMonth(2),
-        this.calRevenueByMonth(3),
-        this.calRevenueByMonth(4),
-        this.calRevenueByMonth(5),
-        this.calRevenueByMonth(6),
-        this.calRevenueByMonth(7),
-        this.calRevenueByMonth(8),
-        this.calRevenueByMonth(9),
-        this.calRevenueByMonth(10),
-        this.calRevenueByMonth(11),
-        this.calRevenueByMonth(12),
-
-      ];
-
-      console.log(this.heatMapData[23]);
-
-      if(m == 2){
-        for(let i = 1; i < 30; i++){
-          this.labels.push(String(i))
-        }
-      }
-      else if(m == 4 || m == 6 || m == 9 || m == 11){
-        for(let i = 1; i < 31; i++){
-          this.labels.push(String(i))
-        }
-      }
-      else{
-        for(let i = 1; i < 32; i++){
-          this.labels.push(String(i))
-        }
-      }
-
-      this.dataForOrdersChart = this.calOrdersForMonth(m);
-      this.dataForRevenueChart = this.calRevenueForMonth(m);
-      this.heatMapData = this.calHeatmapForMonth(m);
-
-
+        this.x();
       
-
-      
-
       this.spackLine();
-
-    })
-    
-
-
   }
 
 }
