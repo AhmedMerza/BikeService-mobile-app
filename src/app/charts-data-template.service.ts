@@ -1,11 +1,291 @@
 import { Injectable } from '@angular/core';
+import { OrdersService } from './orders.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChartsDataTemplateService {
 
-  constructor() { }
+  constructor(public orderServ: OrdersService) { }
+  public dataStore;
+  public data;
+  public years: Set<number>;
+
+  //First lets put a functions that takes the inputs [period("this month" or "this year"), type("orders" or "revenue")]
+  // Returns 
+
+
+  public day = Array(24).fill([0,0,0,0]); // [Number of orders, Revenue, Number of itemOrders, Number of serviceOrders]
+  public monthT1 = Array(31).fill(this.day);
+  public monthT2 = Array(30).fill(this.day);
+  public monthT3 = Array(29).fill(this.day);
+  public monthT4 = Array(28).fill(this.day);
+  public yearT1 = [Array.from(this.monthT1), Array.from(this.monthT4), Array.from(this.monthT1),
+                   Array.from(this.monthT2),Array.from(this.monthT1), Array.from(this.monthT2),
+                   Array.from(this.monthT1), Array.from(this.monthT1),Array.from(this.monthT2),
+                   Array.from(this.monthT1),Array.from(this.monthT2), Array.from(this.monthT1)
+                  ];
+  public yearT2 = [Array.from(this.monthT1), Array.from(this.monthT3), Array.from(this.monthT1),
+                    Array.from(this.monthT2),Array.from(this.monthT1), Array.from(this.monthT2),
+                    Array.from(this.monthT1), Array.from(this.monthT1),Array.from(this.monthT2),
+                    Array.from(this.monthT1),Array.from(this.monthT2), Array.from(this.monthT1)
+                  ];
+  
+  addYear(year){
+    let aYear = {}
+    if(year % 4 == 0){
+      aYear[year] = Array.from(this.yearT2);
+    }
+    else{
+      aYear[year] = Array.from(this.yearT1);
+    }
+    this.data.push(aYear)
+  };
+
+  
+
+
+  calcData(){
+  this.orderServ.getOrders().subscribe((orders) => {
+    this.dataStore = orders
+    console.log(this.dataStore)
+    for (let order of this.dataStore) {
+      let date = new Date(order.Date);
+      let hour = date.getHours();
+      let day = date.getDate();
+      let month = date.getMonth() + 1;
+      let year = date.getFullYear();
+      if (!this.years.has(year)){
+        this.addYear(year)
+      }
+
+
+      
+      
+      this.thisYearOrders[year][month][day][hour] +=1;
+      this.thisYearReveue[year][month][day][hour] += order.totalPrice;
+
+      let dayWeekName = date.getDay();
+
+      this.dataForHeatMapYear[hour].data[dayWeekName] += 1;
+
+      if(year == y && month == m){
+        this.dataForHeatMapMonth[hour].data[dayWeekName] += 1;
+      }
+      
+      
+    }
+  })
+}
+  
+
+
+
+  changePeriod(){
+    let period = this.showStatsFor;
+    let d = new Date();
+    let m = d.getMonth() + 1;
+    let labels = [];
+    this.numOfOrders.xaxis.categories = [];
+    this.revenueChart.xaxis.categories = [];
+    if(period == 'thisMonth'){
+      
+      if(m == 2){
+        for(let i = 1; i < 30; i++){
+          labels.push(String(i))
+        }
+      }
+      else if(m == 4 || m == 6 || m == 9 || m == 11){
+        for(let i = 1; i < 31; i++){
+          labels.push(String(i))
+        }
+      }
+      else{
+        for(let i = 1; i < 32; i++){
+          labels.push(String(i))
+        }
+      }
+      console.log(labels,m);
+      this.labels = labels;
+      this.dataForOrdersChart = this.calOrdersForMonth(m);
+      this.dataForRevenueChart = this.calRevenueForMonth(m);
+      this.heatMapData = this.calHeatmapForMonth(m);
+    }
+    else if(period=='thisYear'){
+
+      this.dataForOrdersChart = this.calOrdersForYear();
+      this.dataForRevenueChart = this.calRevenueForYear();
+      this.heatMapData = this.calHeatmapForYear();
+
+    }
+    this.spackLine();
+  }
+
+  calOrdersByMonth(m: number){
+    let sum = 0;
+    let d = new Date();
+    let year = d.getFullYear();
+    if(m == 2){
+      for(let i = 1; i < 30; i++){
+        sum += this.calOrdersByDayOfMonth(i, m);
+      }
+    }
+    else if(m == 4 || 6 || 9 || 11){
+      for(let i = 1; i < 31; i++){
+        sum += this.calOrdersByDayOfMonth(i, m);
+      }
+    }
+    else{
+      for(let i = 1; i < 32; i++){
+        sum += this.calOrdersByDayOfMonth(i, m);
+      }
+    }
+    return sum;
+  }
+
+  calOrdersForMonth(m: number){
+    let orders= [];
+    let sum = 0;
+    let d = new Date();
+    let year = d.getFullYear();
+    if(m == 2){
+      for(let i = 1; i < 30; i++){
+        orders.push(this.calOrdersByDayOfMonth(i, m));
+        sum += this.calOrdersByDayOfMonth(i, m);
+      }
+    }
+    else if(m == 4 || 6 || 9 || 11){
+      for(let i = 1; i < 31; i++){
+        orders.push(this.calOrdersByDayOfMonth(i, m));
+        sum += this.calOrdersByDayOfMonth(i, m);
+      }
+    }
+    else{
+      for(let i = 1; i < 32; i++){
+        orders.push(this.calOrdersByDayOfMonth(i, m));
+        sum += this.calOrdersByDayOfMonth(i, m);
+      }
+    }
+    this.totalOrders = sum;
+    return orders;
+  }
+
+  calOrdersForYear(){
+    let revenue= [];
+    let sum = 0;
+      for(let i = 1; i < 13; i++){
+        revenue.push(this.calOrdersByMonth(i));
+        sum += this.calOrdersByMonth(i);
+      }
+    this.totalOrders = sum;
+    return revenue;
+  }
+
+  calOrdersByDayOfMonth(d: number, m: number) {
+    let sum = 0;
+    for(let i = 0; i < 24; i++){
+      sum += this.thisYearOrders[m][d][i];
+    }
+    return sum;
+  }
+
+  calRevenueByMonth(m: number){
+    let sum = 0;
+    let d = new Date();
+    let year = d.getFullYear();
+    if(m == 2){
+      for(let i = 1; i < 30; i++){
+        sum += this.calRevenueByDayOfMonth(i, m);
+      }
+    }
+    else if(m == 4 || 6 || 9 || 11){
+      for(let i = 1; i < 31; i++){
+        sum += this.calRevenueByDayOfMonth(i, m);
+      }
+    }
+    else{
+      for(let i = 1; i < 32; i++){
+        sum += this.calRevenueByDayOfMonth(i, m);
+      }
+    }
+    return sum;
+  }
+
+  calRevenueForMonth(m: number){
+    let revenue= [];
+    let d = new Date();
+    let sum = 0;
+    let year = d.getFullYear();
+    if(m == 2){
+      for(let i = 1; i < 30; i++){
+        revenue.push(this.calRevenueByDayOfMonth(i, m).toFixed(2));
+        sum += this.calRevenueByDayOfMonth(i, m);
+      }
+    }
+    else if(m == 4 || m == 6 || m == 9 || m == 11){
+      for(let i = 1; i < 31; i++){
+        revenue.push(this.calRevenueByDayOfMonth(i, m).toFixed(2));
+        sum += this.calRevenueByDayOfMonth(i, m);
+      }
+    }
+    else{
+      for(let i = 1; i < 32; i++){
+        revenue.push(this.calRevenueByDayOfMonth(i, m).toFixed(2));
+        sum += this.calRevenueByDayOfMonth(i, m);
+      }
+    }
+    this.totalRevenue = sum;
+    return revenue;
+  }
+
+  calRevenueForYear(){
+    let revenue= [];
+    let sum = 0;
+      for(let i = 1; i < 13; i++){
+        revenue.push(this.calRevenueByMonth(i).toFixed(2));
+        sum += this.calRevenueByMonth(i);
+      }
+
+    this.totalRevenue = sum;
+    return revenue;
+  }
+
+  calRevenueByDayOfMonth(d: number, m: number) {
+    let sum = 0;
+    for(let i = 0; i < 24; i++){
+      sum += this.thisYearReveue[m][d][i];
+    }
+    return sum;
+  }
+
+  calHeatmapForMonth(m){
+    return this.dataTemp.heatMapDataTempThisMonth;
+  }
+
+  calHeatmapForYear(){
+    return this.dataTemp.heatMapDataTempThisYear;
+  }
+
+  getTotalOrders(){
+    return this.sum(this.dataForOrdersChart);
+  }
+
+  getTotalRevenue(){
+    return this.sum(this.dataForRevenueChart);
+  }
+
+  sum(x: number[]){
+    let sum = 0;
+    for (let i of x){
+      sum += i;
+    }
+    return Number(sum);
+  }
+
+  
+
+
+  
 
   public heatMapDataTempThisYear = [{
     name: '12AM',
